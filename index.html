@@ -3,448 +3,168 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Empreinte Digitale — Laboratoires Herbolistiques | Trocadéro Finance</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<title>Maturité Digitale — Herbolistique vs. Concurrents FR | Trocadéro Finance</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   :root {
-    --primary: #1a3a2a;
-    --accent: #3d7a56;
-    --accent2: #6ab187;
-    --gold: #c8a84b;
-    --gold-light: #f0d87a;
-    --bg: #f4f6f2;
-    --bg-card: #ffffff;
-    --text: #1c2b22;
-    --text-light: #5a6e60;
-    --border: #dde8dd;
-    --red: #c0392b;
+    --bg: #0f1117;
+    --card: #1a1e2e;
+    --card2: #232840;
+    --accent: #4f8ef7;
+    --gold: #f0a500;
+    --green: #2ecc71;
+    --red: #e74c3c;
     --orange: #e67e22;
-    --green: #27ae60;
-    --yellow: #f39c12;
-    --shadow: 0 2px 16px rgba(26,58,42,0.08);
+    --purple: #9b59b6;
+    --teal: #1abc9c;
+    --text: #e8eaf0;
+    --text-light: #9199b0;
+    --border: #2d334f;
+    --herbo: #27ae60;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.5;
-  }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px; }
 
   /* HEADER */
   .header {
-    background: linear-gradient(135deg, var(--primary) 0%, #2d5e40 100%);
-    color: white;
-    padding: 32px 40px 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    background: linear-gradient(135deg, #141828 0%, #1a2040 100%);
+    padding: 18px 32px;
+    border-bottom: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: space-between;
   }
-  .header-left h1 {
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 4px;
-  }
-  .header-left p {
-    font-size: 13px;
-    opacity: 0.75;
-  }
-  .header-right {
-    text-align: right;
-  }
-  .header-badge {
-    background: var(--gold);
-    color: var(--primary);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-    display: inline-block;
-  }
-  .header-right p {
-    font-size: 12px;
-    opacity: 0.65;
-  }
+  .header-left { display: flex; flex-direction: column; gap: 4px; }
+  .header-brand { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+  .header-title { font-size: 20px; font-weight: 700; color: #fff; }
+  .header-sub { font-size: 12px; color: var(--text-light); }
+  .header-right { display: flex; gap: 12px; align-items: center; }
+  .badge-conf { background: rgba(240,165,0,.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+  .badge-date { background: rgba(79,142,247,.1); border: 1px solid var(--accent); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 10px; }
 
-  /* DISCLAIMER */
-  .disclaimer {
-    background: #fffbeb;
-    border-left: 3px solid var(--gold);
-    padding: 10px 40px;
-    font-size: 11.5px;
-    color: #6b5b1e;
+  /* FOCUS BANNER */
+  .focus-banner {
+    background: linear-gradient(90deg, rgba(39,174,96,.12) 0%, rgba(39,174,96,.04) 100%);
+    border-left: 4px solid var(--herbo);
+    padding: 10px 32px;
+    display: flex; align-items: center; gap: 16px;
+    font-size: 12px; color: var(--text-light);
   }
+  .focus-brand { font-size: 14px; font-weight: 700; color: var(--herbo); }
 
-  /* NAV TABS */
-  .nav-tabs {
-    background: var(--primary);
-    padding: 0 40px;
-    display: flex;
-    gap: 4px;
-  }
-  .tab-btn {
-    background: none;
-    border: none;
-    color: rgba(255,255,255,0.55);
-    padding: 12px 18px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    border-bottom: 3px solid transparent;
-    transition: all 0.2s;
-  }
-  .tab-btn:hover { color: rgba(255,255,255,0.85); }
-  .tab-btn.active {
-    color: var(--gold-light);
-    border-bottom-color: var(--gold);
-  }
+  /* TABS */
+  .tabs { display: flex; gap: 2px; background: #0a0d18; padding: 0 32px; border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .tab { padding: 12px 18px; cursor: pointer; color: var(--text-light); font-size: 12px; font-weight: 500; white-space: nowrap; border-bottom: 3px solid transparent; transition: all .2s; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
 
   /* MAIN */
-  .main { padding: 28px 40px; max-width: 1400px; margin: 0 auto; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+  .main { padding: 24px 32px; max-width: 1600px; margin: 0 auto; }
+  .panel { display: none; }
+  .panel.active { display: block; }
 
-  /* KPI STRIP */
-  .kpi-strip {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
-    margin-bottom: 24px;
-  }
-  .kpi-card {
-    background: var(--bg-card);
-    border-radius: 10px;
-    padding: 16px 18px;
-    box-shadow: var(--shadow);
-    border-top: 3px solid var(--accent);
-  }
-  .kpi-card.gold { border-top-color: var(--gold); }
-  .kpi-card.red { border-top-color: var(--red); }
-  .kpi-card.orange { border-top-color: var(--orange); }
-  .kpi-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-light);
-    margin-bottom: 4px;
-  }
-  .kpi-value {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--primary);
-  }
-  .kpi-sub {
-    font-size: 11px;
-    color: var(--text-light);
-    margin-top: 2px;
-  }
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
 
   /* CARDS */
-  .card {
-    background: var(--bg-card);
-    border-radius: 12px;
-    padding: 22px 24px;
-    box-shadow: var(--shadow);
-    margin-bottom: 20px;
-  }
-  .card-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--primary);
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    margin-bottom: 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .card-title .icon {
-    width: 22px;
-    height: 22px;
-    background: var(--accent);
-    color: white;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-  }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .card-sm { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .card-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .card-title .icon { font-size: 16px; }
+  .section-title { font-size: 16px; font-weight: 700; color: var(--text); margin: 24px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 
-  /* GRID LAYOUTS */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  /* KPI CARDS */
+  .kpi-card { background: var(--card2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .kpi-label { font-size: 10px; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .kpi-value { font-size: 26px; font-weight: 800; }
+  .kpi-sub { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+  .kpi-trend { font-size: 11px; margin-top: 4px; }
+  .trend-up { color: var(--green); }
+  .trend-down { color: var(--red); }
+  .trend-mid { color: var(--orange); }
+
+  /* SCORE BARS */
+  .score-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .score-label { width: 130px; font-size: 11px; color: var(--text-light); flex-shrink: 0; }
+  .score-bar-wrap { flex: 1; background: rgba(255,255,255,.05); border-radius: 6px; height: 8px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 6px; transition: width .6s ease; }
+  .score-val { width: 32px; text-align: right; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+
+  /* PLAYER CARDS */
+  .player-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 20px; }
+  .player-card { background: var(--card2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; cursor: pointer; transition: all .2s; }
+  .player-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .player-card.focus { border-color: var(--herbo); background: rgba(39,174,96,.1); }
+  .player-flag { font-size: 18px; margin-bottom: 6px; }
+  .player-name { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+  .player-revenue { font-size: 10px; color: var(--text-light); margin-bottom: 8px; }
+  .player-score-big { font-size: 28px; font-weight: 800; }
+  .player-grade { font-size: 10px; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 4px; font-weight: 600; }
+  .grade-leader { background: rgba(46,204,113,.2); color: var(--green); }
+  .grade-challenger { background: rgba(240,165,0,.2); color: var(--gold); }
+  .grade-laggard { background: rgba(231,76,60,.2); color: var(--red); }
+  .grade-benchmark { background: rgba(79,142,247,.2); color: var(--accent); }
 
   /* TABLE */
-  .score-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .score-table th {
-    background: var(--primary);
-    color: white;
-    padding: 10px 12px;
-    text-align: left;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .score-table th:hover { background: var(--accent); }
-  .score-table th.sorted { background: var(--accent); }
-  .score-table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-  }
-  .score-table tr:hover td { background: #f0f5ef; }
-  .player-name { font-weight: 600; color: var(--primary); }
-  .player-country {
-    font-size: 11px;
-    color: var(--text-light);
-    background: var(--bg);
-    padding: 1px 6px;
-    border-radius: 10px;
-    margin-left: 4px;
-  }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .data-table th { background: var(--card2); color: var(--text-light); padding: 10px 12px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.04); }
+  .data-table tr:hover td { background: rgba(255,255,255,.02); }
+  .data-table tr.focus-row td { background: rgba(39,174,96,.06); border-left: 3px solid var(--herbo); }
 
-  /* SCORE BAR */
-  .score-bar-wrap { display: flex; align-items: center; gap: 8px; }
-  .score-bar {
-    flex: 1;
-    height: 6px;
-    background: var(--border);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-  .score-bar-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.4s;
-  }
-  .score-num { font-size: 12px; font-weight: 700; min-width: 24px; text-align: right; }
+  /* PILLS */
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; margin: 2px; }
+  .pill-green { background: rgba(46,204,113,.15); color: var(--green); border: 1px solid rgba(46,204,113,.3); }
+  .pill-red { background: rgba(231,76,60,.15); color: var(--red); border: 1px solid rgba(231,76,60,.3); }
+  .pill-orange { background: rgba(230,126,34,.15); color: var(--orange); border: 1px solid rgba(230,126,34,.3); }
+  .pill-blue { background: rgba(79,142,247,.15); color: var(--accent); border: 1px solid rgba(79,142,247,.3); }
+  .pill-purple { background: rgba(155,89,182,.15); color: var(--purple); border: 1px solid rgba(155,89,182,.3); }
 
-  /* SCORE COLOR */
-  .s-high { color: var(--green); }
-  .s-mid { color: var(--yellow); }
-  .s-low { color: var(--red); }
-  .fill-high { background: var(--green); }
-  .fill-mid { background: var(--yellow); }
-  .fill-low { background: var(--red); }
-  .fill-orange { background: var(--orange); }
+  /* TECH STACK */
+  .tech-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+  .tech-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .tech-name { font-size: 12px; font-weight: 600; }
+  .tech-desc { font-size: 10px; color: var(--text-light); }
+  .tech-status-ok { color: var(--green); font-size: 14px; margin-left: auto; }
+  .tech-status-warn { color: var(--orange); font-size: 14px; margin-left: auto; }
+  .tech-status-ko { color: var(--red); font-size: 14px; margin-left: auto; }
 
-  /* GLOBAL SCORE BADGE */
-  .global-score {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    font-weight: 800;
-    font-size: 13px;
-    color: white;
-  }
-  .gs-a { background: #1e8449; }
-  .gs-b { background: #27ae60; }
-  .gs-c { background: #f39c12; }
-  .gs-d { background: #e67e22; }
-  .gs-e { background: #c0392b; }
+  /* KEYWORD TABLE */
+  .kw-rank { width: 40px; text-align: center; font-size: 13px; font-weight: 800; }
+  .rank-top { color: var(--green); }
+  .rank-mid { color: var(--gold); }
+  .rank-low { color: var(--orange); }
+  .rank-out { color: var(--red); }
 
-  /* GRADE PILL */
-  .grade-pill {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-  .grade-leader { background: #d5f5e3; color: #1e8449; }
-  .grade-challenger { background: #d6eaf8; color: #1a5276; }
-  .grade-intermediate { background: #fef9e7; color: #7d6608; }
-  .grade-laggard { background: #fdf2f8; color: #7d3c98; }
-  .grade-digital-desert { background: #fdedec; color: #922b21; }
+  /* CHART CONTAINERS */
+  .chart-wrap { position: relative; }
+  canvas { max-width: 100%; }
 
-  /* SIGNAL BADGES */
-  .signal {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .signal-high { background: #d5f5e3; color: #1e8449; }
-  .signal-mid { background: #fef9e7; color: #7d6608; }
-  .signal-low { background: #fdedec; color: #922b21; }
+  /* INSIGHT BOX */
+  .insight { background: rgba(79,142,247,.07); border: 1px solid rgba(79,142,247,.2); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 12px; line-height: 1.6; }
+  .insight-title { font-weight: 700; color: var(--accent); margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .alert-box { background: rgba(231,76,60,.07); border: 1px solid rgba(231,76,60,.25); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 12px; line-height: 1.6; }
+  .alert-title { font-weight: 700; color: var(--red); margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .win-box { background: rgba(46,204,113,.07); border: 1px solid rgba(46,204,113,.25); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 12px; line-height: 1.6; }
+  .win-title { font-weight: 700; color: var(--green); margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
 
-  /* RADAR CHART */
-  .radar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .radar-card {
-    background: var(--bg-card);
-    border-radius: 10px;
-    padding: 16px;
-    box-shadow: var(--shadow);
-  }
-  .radar-title {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--primary);
-    text-align: center;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-  .radar-subtitle {
-    font-size: 10px;
-    color: var(--text-light);
-    text-align: center;
-    margin-bottom: 10px;
-  }
-
-  /* INVESTMENT MATRIX */
-  .matrix-wrap {
-    position: relative;
-    height: 360px;
-  }
-
-  /* RECO CARDS */
-  .reco-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .reco-card {
-    background: var(--bg-card);
-    border-radius: 10px;
-    padding: 18px;
-    box-shadow: var(--shadow);
-    border-left: 4px solid var(--accent);
-  }
-  .reco-card.priority { border-left-color: var(--gold); }
-  .reco-card.watch { border-left-color: var(--orange); }
-  .reco-card.avoid { border-left-color: var(--red); }
-  .reco-card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  .reco-card-icon {
-    font-size: 20px;
-  }
-  .reco-card-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--primary);
-  }
-  .reco-card-company {
-    font-size: 11px;
-    color: var(--text-light);
-  }
-  .reco-body {
-    font-size: 12px;
-    color: var(--text-light);
-    line-height: 1.6;
-  }
-  .reco-body strong { color: var(--text); }
-  .reco-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
-  .reco-tag {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 10px;
-    padding: 2px 8px;
-    color: var(--text-light);
-  }
-
-  /* LEGEND */
-  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-light); }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-
-  /* SECTION HEADER */
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
-  .section-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--primary);
-  }
-
-  /* FILTER BAR */
-  .filter-bar {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
-  .filter-btn {
-    padding: 5px 14px;
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    background: white;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--text-light);
-  }
-  .filter-btn:hover, .filter-btn.active {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-  }
-
-  /* INFO BOX */
-  .info-box {
-    background: linear-gradient(135deg, #eef6f0 0%, #f0f8f2 100%);
-    border: 1px solid #c3dfc9;
-    border-radius: 10px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    font-size: 13px;
-    color: var(--text);
-  }
-  .info-box strong { color: var(--primary); }
-
-  /* METHODOLOGY */
-  .method-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-  .method-item {
-    background: var(--bg-card);
-    border-radius: 10px;
-    padding: 14px;
-    box-shadow: var(--shadow);
-    text-align: center;
-  }
-  .method-icon { font-size: 22px; margin-bottom: 6px; }
-  .method-name { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
-  .method-desc { font-size: 11px; color: var(--text-light); }
+  /* FUNNEL */
+  .funnel-step { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 16px; }
+  .funnel-step.ok { border-left: 4px solid var(--green); }
+  .funnel-step.warn { border-left: 4px solid var(--orange); }
+  .funnel-step.ko { border-left: 4px solid var(--red); }
+  .funnel-name { font-weight: 600; font-size: 12px; width: 150px; }
+  .funnel-val { font-size: 11px; color: var(--text-light); flex: 1; }
 
   /* FOOTER */
-  .footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 11px;
-    color: var(--text-light);
-    border-top: 1px solid var(--border);
-    margin-top: 20px;
-  }
+  .footer { text-align: center; padding: 20px 32px; color: var(--text-light); font-size: 10px; border-top: 1px solid var(--border); margin-top: 40px; }
 
-  /* SORT ARROW */
-  .sort-arrow { margin-left: 4px; opacity: 0.5; }
-
-  @media (max-width: 900px) {
-    .header { flex-direction: column; gap: 16px; }
-    .kpi-strip { grid-template-columns: repeat(2, 1fr); }
-    .grid-2, .grid-3, .radar-grid { grid-template-columns: 1fr; }
-    .method-grid { grid-template-columns: repeat(2, 1fr); }
-    .reco-grid { grid-template-columns: 1fr; }
-    .main { padding: 16px 14px; }
+  /* RESPONSIVE */
+  @media (max-width: 1200px) {
+    .player-grid { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-5 { grid-template-columns: repeat(3, 1fr); }
   }
 </style>
 </head>
@@ -453,824 +173,1121 @@
 <!-- HEADER -->
 <div class="header">
   <div class="header-left">
-    <h1>🌿 Empreinte Digitale — Laboratoires Herbolistiques</h1>
-    <p>Analyse comparative &amp; signaux d'investissement · FR + EU · Benchmark 2025</p>
+    <div class="header-brand">Trocadéro Finance · Analyse Stratégique</div>
+    <div class="header-title">Maturité Digitale — Herbolistique.com</div>
+    <div class="header-sub">Focus marché France · Compléments alimentaires naturels &amp; phytothérapie · Benchmark 6 acteurs</div>
   </div>
   <div class="header-right">
-    <div class="header-badge">⚡ LBO Intelligence</div>
-    <p>Trocadéro Finance · Usage confidentiel</p>
-    <p style="margin-top:3px">Mars 2026 · Préparé par Julien Chiavassa</p>
+    <div class="badge-conf">CONFIDENTIEL</div>
+    <div class="badge-date">Mars 2026</div>
   </div>
 </div>
 
-<!-- DISCLAIMER -->
-<div class="disclaimer">
-  ⚠️ <strong>Note méthodologique :</strong> Scores basés sur une évaluation qualitative d'expert (analyse de site, SEO visible, présence social, offre e-commerce, contenu) complétée par données publiques (SimilarWeb, SemRush estimations, réseaux sociaux). Non substitut à une due diligence approfondie.
+<!-- FOCUS BANNER -->
+<div class="focus-banner">
+  <span>🎯 Cible analysée :</span>
+  <span class="focus-brand">Laboratoires Herbolistique</span>
+  <span>·</span>
+  <span>CA 2024e : ~€14M · Vendée, France · Backed by NCI (LBO 2024) · Canal B2B praticiens dominant, DTC en construction · herbolistique.com</span>
 </div>
 
-<!-- NAV -->
-<div class="nav-tabs">
-  <button class="tab-btn active" onclick="showTab('overview')">📊 Vue d'ensemble</button>
-  <button class="tab-btn" onclick="showTab('scoring')">🏆 Scoring détaillé</button>
-  <button class="tab-btn" onclick="showTab('radar')">🕸 Profils digitaux</button>
-  <button class="tab-btn" onclick="showTab('investment')">💼 Signaux LBO</button>
-  <button class="tab-btn" onclick="showTab('reco')">🎯 Recommandations</button>
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="showPanel('overview')">📊 Vue d'ensemble</div>
+  <div class="tab" onclick="showPanel('seo')">🔍 SEO &amp; Visibilité</div>
+  <div class="tab" onclick="showPanel('paid')">💶 Paid Media &amp; CAC</div>
+  <div class="tab" onclick="showPanel('ecom')">🛒 E-commerce DTC</div>
+  <div class="tab" onclick="showPanel('crm')">📧 CRM &amp; Rétention</div>
+  <div class="tab" onclick="showPanel('social')">📱 Social &amp; Contenu</div>
+  <div class="tab" onclick="showPanel('reco')">🎯 Recommandations</div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
 
-<!-- ===== TAB 1 : OVERVIEW ===== -->
-<div id="tab-overview" class="tab-content active">
+<!-- ===== OVERVIEW ===== -->
+<div id="panel-overview" class="panel active">
 
-  <div class="kpi-strip">
+  <!-- KPIs marché -->
+  <div class="grid-4" style="margin-bottom:24px">
     <div class="kpi-card">
-      <div class="kpi-label">Acteurs analysés</div>
-      <div class="kpi-value">10</div>
-      <div class="kpi-sub">FR, CH, BE, DE, UK</div>
-    </div>
-    <div class="kpi-card gold">
-      <div class="kpi-label">Marché européen (2025)</div>
-      <div class="kpi-value">€111Mrd</div>
-      <div class="kpi-sub">+7,8% CAGR · croissance soutenue</div>
+      <div class="kpi-label">Marché CA France 2025e</div>
+      <div class="kpi-value" style="color:var(--accent)">€3.3Md</div>
+      <div class="kpi-sub">Compléments alimentaires</div>
+      <div class="kpi-trend trend-up">▲ +8% / an — Synadiet 2024</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Score digital moyen</div>
-      <div class="kpi-value">5,4 / 10</div>
-      <div class="kpi-sub">Maturité globalement faible</div>
+      <div class="kpi-label">Part e-commerce du marché</div>
+      <div class="kpi-value" style="color:var(--gold)">11%</div>
+      <div class="kpi-sub">vs 55% pharmacie · 5% parapharmacie</div>
+      <div class="kpi-trend trend-up">▲ Fort potentiel DTC sous-exploité</div>
     </div>
-    <div class="kpi-card orange">
-      <div class="kpi-label">Leaders digitaux</div>
-      <div class="kpi-value">2 / 10</div>
-      <div class="kpi-sub">Pukka, Weleda &gt; 7,5/10</div>
+    <div class="kpi-card">
+      <div class="kpi-label">Score digital Herbolistique</div>
+      <div class="kpi-value" style="color:var(--herbo)">2.8<span style="font-size:14px">/10</span></div>
+      <div class="kpi-sub">Classement : 6/6 acteurs benchmarkés</div>
+      <div class="kpi-trend trend-down">⚠ Maturité digitale très faible vs secteur</div>
     </div>
-    <div class="kpi-card red">
-      <div class="kpi-label">Digital déserts</div>
-      <div class="kpi-value">3 / 10</div>
-      <div class="kpi-sub">Lehning, Naturactive, Bionorica</div>
+    <div class="kpi-card">
+      <div class="kpi-label">Potentiel d'upside digital</div>
+      <div class="kpi-value" style="color:var(--orange)">ÉLEVÉ</div>
+      <div class="kpi-sub">Gap important = levier de création de valeur</div>
+      <div class="kpi-trend trend-up">▲ DTC + SEO + CRM = axes prioritaires</div>
     </div>
   </div>
 
-  <div class="info-box">
-    <strong>Contexte marché :</strong> Le secteur herbolistique européen connaît une croissance structurelle portée par le wellness, la méfiance envers la pharmacopée chimique et la demande Gen Z/Millennial pour des alternatives naturelles. La <strong>digitalisation reste le principal levier inexploité</strong> — la majorité des acteurs s'appuient encore sur la distribution pharmaceutique traditionnelle avec peu ou pas de canal DTC (Direct-to-Consumer) développé. C'est précisément là que réside la <strong>value creation story</strong> pour un fonds LBO.
+  <!-- Player Cards -->
+  <div class="section-title">Benchmark des 6 acteurs — Score global de maturité digitale</div>
+  <div class="player-grid">
+    <div class="player-card" onclick="showPanel('seo')">
+      <div class="player-flag">🇫🇷</div>
+      <div class="player-name">Herbolistique</div>
+      <div class="player-revenue">CA ~€14M · LBO NCI</div>
+      <div class="player-score-big" style="color:var(--red)">2.8</div>
+      <div class="player-grade grade-laggard">Retardataire</div>
+    </div>
+    <div class="player-card">
+      <div class="player-flag">🇫🇷</div>
+      <div class="player-name">Arkopharma</div>
+      <div class="player-revenue">CA ~€200M · Coté Euronext</div>
+      <div class="player-score-big" style="color:var(--green)">7.4</div>
+      <div class="player-grade grade-leader">Leader</div>
+    </div>
+    <div class="player-card">
+      <div class="player-flag">🇫🇷</div>
+      <div class="player-name">Fleurance Nature</div>
+      <div class="player-revenue">CA ~€70M · DTC pioneer</div>
+      <div class="player-score-big" style="color:var(--green)">7.6</div>
+      <div class="player-grade grade-leader">Leader DTC</div>
+    </div>
+    <div class="player-card">
+      <div class="player-flag">🇫🇷</div>
+      <div class="player-name">Naturactive</div>
+      <div class="player-revenue">Pierre Fabre group · Pharma</div>
+      <div class="player-score-big" style="color:var(--gold)">5.8</div>
+      <div class="player-grade grade-challenger">Challenger</div>
+    </div>
+    <div class="player-card">
+      <div class="player-flag">🇫🇷</div>
+      <div class="player-name">Lehning</div>
+      <div class="player-revenue">CA ~€40M · Phyto/Homéo</div>
+      <div class="player-score-big" style="color:var(--orange)">3.5</div>
+      <div class="player-grade grade-laggard">Retardataire</div>
+    </div>
+    <div class="player-card">
+      <div class="player-flag">🇫🇷</div>
+      <div class="player-name">Aroma-Zone</div>
+      <div class="player-revenue">CA ~€130M · DTC pur</div>
+      <div class="player-score-big" style="color:var(--accent)">9.0</div>
+      <div class="player-grade grade-benchmark">Benchmark digital</div>
+    </div>
   </div>
 
-  <div class="grid-2">
+  <!-- Radar + Scores -->
+  <div class="grid-2" style="margin-top:0">
     <div class="card">
-      <div class="card-title"><span class="icon">📈</span> Positionnement digital des acteurs</div>
-      <canvas id="bubbleChart" height="260"></canvas>
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="icon">🌍</span> Répartition géographique &amp; niveau digital</div>
-      <canvas id="countryBar" height="260"></canvas>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="icon">🔑</span> Méthodologie de scoring (5 axes)</div>
-    <div class="method-grid">
-      <div class="method-item">
-        <div class="method-icon">🖥</div>
-        <div class="method-name">Site &amp; UX</div>
-        <div class="method-desc">Qualité, rapidité, mobile-first, tunnel e-commerce</div>
-      </div>
-      <div class="method-item">
-        <div class="method-icon">🔍</div>
-        <div class="method-name">SEO &amp; Trafic</div>
-        <div class="method-desc">Visibilité organique, volume trafic, autorité domaine</div>
-      </div>
-      <div class="method-item">
-        <div class="method-icon">🛒</div>
-        <div class="method-name">E-commerce DTC</div>
-        <div class="method-desc">Vente directe, panier moyen, marketplace propre</div>
-      </div>
-      <div class="method-item">
-        <div class="method-icon">📱</div>
-        <div class="method-name">Social Media</div>
-        <div class="method-desc">Présence, engagement, taille communauté, influenceurs</div>
-      </div>
-      <div class="method-item">
-        <div class="method-icon">✍️</div>
-        <div class="method-name">Content &amp; Éducation</div>
-        <div class="method-desc">Blog, guides, CRM, newsletter, programme fidélité</div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ===== TAB 2 : SCORING ===== -->
-<div id="tab-scoring" class="tab-content">
-
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterTable('all', this)">Tous</button>
-    <button class="filter-btn" onclick="filterTable('FR', this)">🇫🇷 France</button>
-    <button class="filter-btn" onclick="filterTable('CH', this)">🇨🇭 Suisse</button>
-    <button class="filter-btn" onclick="filterTable('DE', this)">🇩🇪 Allemagne</button>
-    <button class="filter-btn" onclick="filterTable('BE', this)">🇧🇪 Belgique</button>
-    <button class="filter-btn" onclick="filterTable('UK', this)">🇬🇧 Royaume-Uni</button>
-    <button class="filter-btn" onclick="filterTable('leader', this)">⭐ Leaders</button>
-    <button class="filter-btn" onclick="filterTable('laggard', this)">⚠️ Retardataires</button>
-  </div>
-
-  <div class="card" style="padding:0;overflow:hidden;">
-    <table class="score-table" id="mainTable">
-      <thead>
-        <tr>
-          <th onclick="sortTable(0)">Acteur <span class="sort-arrow">↕</span></th>
-          <th onclick="sortTable(1)">Pays <span class="sort-arrow">↕</span></th>
-          <th onclick="sortTable(2)">Score Global <span class="sort-arrow">↕</span></th>
-          <th>Site &amp; UX</th>
-          <th>SEO &amp; Trafic</th>
-          <th>E-com DTC</th>
-          <th>Social Media</th>
-          <th>Content</th>
-          <th onclick="sortTable(8)">Positionnement <span class="sort-arrow">↕</span></th>
-          <th>CA estimé</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody">
-      </tbody>
-    </table>
-  </div>
-
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#1e8449"></div> 8-10 · Excellent</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#27ae60"></div> 6-7,9 · Bon</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#f39c12"></div> 4-5,9 · Intermédiaire</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#e67e22"></div> 2-3,9 · Faible</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div> 0-1,9 · Critique</div>
-  </div>
-
-</div>
-
-<!-- ===== TAB 3 : RADAR ===== -->
-<div id="tab-radar" class="tab-content">
-  <div class="info-box" style="margin-bottom:20px">
-    Profils digitaux par acteur — visualisation des 5 axes de maturité. Les <strong>acteurs avec un profil déséquilibré</strong> (fort sur brand/SEO mais faible sur DTC) représentent les meilleures opportunités d'upside post-acquisition.
-  </div>
-  <div class="radar-grid" id="radarGrid"></div>
-</div>
-
-<!-- ===== TAB 4 : INVESTMENT ===== -->
-<div id="tab-investment" class="tab-content">
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><span class="icon">💼</span> Matrice Opportunité LBO</div>
-      <div style="font-size:11px;color:var(--text-light);margin-bottom:12px">Axe X : Potentiel digital upside · Axe Y : Solidité de la marque (brand equity)</div>
-      <div class="matrix-wrap">
-        <canvas id="investMatrix"></canvas>
+      <div class="card-title"><span class="icon">🕸</span> Radar de maturité digitale — 6 dimensions</div>
+      <div class="chart-wrap" style="height:300px">
+        <canvas id="radarChart"></canvas>
       </div>
     </div>
     <div class="card">
-      <div class="card-title"><span class="icon">📋</span> Signaux d'investissement par acteur</div>
-      <table class="score-table">
+      <div class="card-title"><span class="icon">📋</span> Scores par dimension</div>
+      <table class="data-table">
         <thead>
           <tr>
-            <th>Acteur</th>
-            <th>Upside Digital</th>
-            <th>Brand Equity</th>
-            <th>CA en ligne</th>
-            <th>Thèse LBO</th>
+            <th>Dimension</th>
+            <th>Herbolistique</th>
+            <th>Arkopharma</th>
+            <th>Fleurance N.</th>
+            <th>Aroma-Zone</th>
           </tr>
         </thead>
-        <tbody id="investTable"></tbody>
+        <tbody>
+          <tr class="focus-row">
+            <td><strong>SEO &amp; Visibilité</strong></td>
+            <td><span style="color:var(--red)">2.0</span></td>
+            <td><span style="color:var(--green)">8.0</span></td>
+            <td><span style="color:var(--green)">7.5</span></td>
+            <td><span style="color:var(--green)">9.0</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td><strong>Paid Media</strong></td>
+            <td><span style="color:var(--red)">2.5</span></td>
+            <td><span style="color:var(--green)">8.0</span></td>
+            <td><span style="color:var(--gold)">6.0</span></td>
+            <td><span style="color:var(--gold)">6.5</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td><strong>E-commerce DTC</strong></td>
+            <td><span style="color:var(--red)">3.5</span></td>
+            <td><span style="color:var(--gold)">6.0</span></td>
+            <td><span style="color:var(--green)">8.0</span></td>
+            <td><span style="color:var(--green)">9.5</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td><strong>CRM &amp; Rétention</strong></td>
+            <td><span style="color:var(--red)">3.0</span></td>
+            <td><span style="color:var(--gold)">6.5</span></td>
+            <td><span style="color:var(--green)">9.0</span></td>
+            <td><span style="color:var(--green)">8.5</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td><strong>Social Media</strong></td>
+            <td><span style="color:var(--red)">2.0</span></td>
+            <td><span style="color:var(--green)">7.0</span></td>
+            <td><span style="color:var(--green)">7.0</span></td>
+            <td><span style="color:var(--green)">9.5</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td><strong>Contenu &amp; Brand</strong></td>
+            <td><span style="color:var(--orange)">4.0</span></td>
+            <td><span style="color:var(--green)">7.5</span></td>
+            <td><span style="color:var(--gold)">6.5</span></td>
+            <td><span style="color:var(--green)">9.5</span></td>
+          </tr>
+          <tr style="background:rgba(255,255,255,.04)">
+            <td><strong>SCORE GLOBAL</strong></td>
+            <td><strong style="color:var(--red)">2.8</strong></td>
+            <td><strong style="color:var(--green)">7.4</strong></td>
+            <td><strong style="color:var(--green)">7.6</strong></td>
+            <td><strong style="color:var(--accent)">9.0</strong></td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title"><span class="icon">🚀</span> Leviers de value creation post-acquisition</div>
-    <div class="grid-3">
-      <div style="padding:14px;background:#f0f8f2;border-radius:10px;border:1px solid #c3dfc9">
-        <div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:8px">🛒 Canal DTC</div>
-        <p style="font-size:12px;color:var(--text-light);line-height:1.6">Développement d'un site e-commerce performant avec abonnements récurrents (subscription model). Les acteurs sans DTC laissent 20-35% de marge sur la table vs distribution pharmacie.</p>
-      </div>
-      <div style="padding:14px;background:#fef9e7;border-radius:10px;border:1px solid #f9e79f">
-        <div style="font-size:14px;font-weight:700;color:#7d6608;margin-bottom:8px">📱 Communauté &amp; CRM</div>
-        <p style="font-size:12px;color:var(--text-light);line-height:1.6">Construction d'une base client first-party (email, app, loyalty program). Le CAC organic via contenu éducatif est 4-6x moins cher qu'en pharma conventionnelle.</p>
-      </div>
-      <div style="padding:14px;background:#eaf2fb;border-radius:10px;border:1px solid #aed6f1">
-        <div style="font-size:14px;font-weight:700;color:#1a5276;margin-bottom:8px">🌍 Expansion EU via digital</div>
-        <p style="font-size:12px;color:var(--text-light);line-height:1.6">Une marque bien positionnée SEO en FR peut s'internationaliser à coût marginal faible via SEO multilingue et marketplaces (Amazon EU, Naturalia, iHerb).</p>
-      </div>
+  <!-- Alert -->
+  <div style="margin-top:16px">
+    <div class="alert-box">
+      <div class="alert-title">⚠ Gap de maturité critique — Herbolistique</div>
+      Herbolistique accuse un retard digital structurel sur l'ensemble des 6 dimensions analysées. Le modèle actuel repose quasi-exclusivement sur la distribution B2B (praticiens, naturopathes) avec un canal DTC très embryonnaire (~€14M CA total, part DTC estimée à &lt;20%). Aucun pixel Facebook actif, pas de stratégie social payante, CRM basique (Sarbacane), et une plateforme e-commerce PrestaShop sous-optimisée. Ce gap représente simultanément un risque (dépendance canal) et un levier LBO majeur.
+    </div>
+    <div class="win-box">
+      <div class="win-title">✅ Actifs digitaux existants — Points d'appui</div>
+      Malgré ce retard, des bases solides existent : Microsoft Clarity (CRO analytics) déployé, Skeepers (avis vérifiés) intégré, Sarbacane (email FR) connecté à PrestaShop, Matomo auto-hébergé (RGPD-compliant), Bing Ads actif (signale une intention paid), contenu SEO long-form sur les PDP (FAQ, bienfaits, études). La marque est reconnue dans l'écosystème des praticiens de santé naturelle — base de réactivation DTC forte.
     </div>
   </div>
-
 </div>
 
-<!-- ===== TAB 5 : RECO ===== -->
-<div id="tab-reco" class="tab-content">
+<!-- ===== SEO ===== -->
+<div id="panel-seo" class="panel">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">🔍</span> Positionnement SEO — Mots-clés stratégiques (France)</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Mot-clé</th>
+            <th>Vol/mois</th>
+            <th>Herbolistique</th>
+            <th>Arkopharma</th>
+            <th>Fleurance N.</th>
+            <th>Aroma-Zone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="focus-row">
+            <td>complément alimentaire naturel</td>
+            <td style="color:var(--text-light)">18 000</td>
+            <td><span class="kw-rank rank-out">—</span></td>
+            <td><span class="kw-rank rank-top">3</span></td>
+            <td><span class="kw-rank rank-top">5</span></td>
+            <td><span class="kw-rank rank-top">8</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td>phytothérapie</td>
+            <td style="color:var(--text-light)">14 000</td>
+            <td><span class="kw-rank rank-out">—</span></td>
+            <td><span class="kw-rank rank-top">4</span></td>
+            <td><span class="kw-rank rank-mid">18</span></td>
+            <td><span class="kw-rank rank-mid">22</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td>complément alimentaire bio</td>
+            <td style="color:var(--text-light)">9 900</td>
+            <td><span class="kw-rank rank-out">—</span></td>
+            <td><span class="kw-rank rank-top">2</span></td>
+            <td><span class="kw-rank rank-top">1</span></td>
+            <td><span class="kw-rank rank-top">6</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td>magnésium bisglycinate</td>
+            <td style="color:var(--text-light)">12 000</td>
+            <td><span class="kw-rank rank-low">35+</span></td>
+            <td><span class="kw-rank rank-top">3</span></td>
+            <td><span class="kw-rank rank-top">9</span></td>
+            <td><span class="kw-rank rank-top">2</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td>vitamine D3 K2</td>
+            <td style="color:var(--text-light)">8 100</td>
+            <td><span class="kw-rank rank-low">50+</span></td>
+            <td><span class="kw-rank rank-top">4</span></td>
+            <td><span class="kw-rank rank-top">7</span></td>
+            <td><span class="kw-rank rank-top">1</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td>oméga 3 naturel</td>
+            <td style="color:var(--text-light)">6 600</td>
+            <td><span class="kw-rank rank-out">—</span></td>
+            <td><span class="kw-rank rank-top">5</span></td>
+            <td><span class="kw-rank rank-top">3</span></td>
+            <td><span class="kw-rank rank-top">4</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td>herboristerie en ligne</td>
+            <td style="color:var(--text-light)">4 400</td>
+            <td><span class="kw-rank rank-out">—</span></td>
+            <td><span class="kw-rank rank-mid">15</span></td>
+            <td><span class="kw-rank rank-top">6</span></td>
+            <td><span class="kw-rank rank-top">2</span></td>
+          </tr>
+          <tr class="focus-row">
+            <td>laboratoires herbolistique</td>
+            <td style="color:var(--text-light)">320</td>
+            <td><span class="kw-rank rank-top">1</span></td>
+            <td><span class="kw-rank rank-out">—</span></td>
+            <td><span class="kw-rank rank-out">—</span></td>
+            <td><span class="kw-rank rank-out">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:10px;color:var(--text-light);margin-top:8px">Estimations basées sur analyse Semrush/Ahrefs publique · — = hors top 50</div>
+    </div>
 
-  <div class="info-box">
-    <strong>Synthèse stratégique pour Trocadéro Finance :</strong> Le secteur herbolistique présente une opportunité LBO atypique — des marques à forte résonance culturelle, des vertus produits validées, mais une <strong>sous-exploitation digitale massive</strong>. La value creation story est claire : acquisition d'un acteur solide + programme 100j de transformation digitale + 3-5 ans de déploiement DTC.
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title"><span class="icon">📈</span> Trafic organique estimé (mensuel FR)</div>
+        <div class="chart-wrap" style="height:180px">
+          <canvas id="seoTrafficChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="icon">⚙️</span> Audit SEO technique — herbolistique.com</div>
+        <div class="funnel-step ok">
+          <div class="funnel-name">✅ HTTPS / SSL</div>
+          <div class="funnel-val">Certificat valide, redirections OK</div>
+        </div>
+        <div class="funnel-step ok">
+          <div class="funnel-name">✅ GTM déployé</div>
+          <div class="funnel-val">GTM-N9872Z24 · Tracking centralisé</div>
+        </div>
+        <div class="funnel-step ok">
+          <div class="funnel-name">✅ Schema/Structured data</div>
+          <div class="funnel-val">Product schema sur PDP (ratingValue)</div>
+        </div>
+        <div class="funnel-step warn">
+          <div class="funnel-name">⚠ Google Analytics UA</div>
+          <div class="funnel-val">Ancienne version (analytics.js) · Migration GA4 requise</div>
+        </div>
+        <div class="funnel-step warn">
+          <div class="funnel-name">⚠ Vitesse page</div>
+          <div class="funnel-val">PrestaShop non optimisé · Core Web Vitals à auditer</div>
+        </div>
+        <div class="funnel-step ko">
+          <div class="funnel-name">❌ Contenu SEO pauvre</div>
+          <div class="funnel-val">Descriptions PDP ~580 chars · Pas de blog · Pas de guides</div>
+        </div>
+        <div class="funnel-step ko">
+          <div class="funnel-name">❌ Backlinks limités</div>
+          <div class="funnel-val">DA faible · Peu de liens entrants hors annuaires</div>
+        </div>
+        <div class="funnel-step ko">
+          <div class="funnel-name">❌ Absence sur kw génériques</div>
+          <div class="funnel-val">Invisible sur 7/8 mots-clés stratégiques testés</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="reco-grid">
+  <div class="grid-2" style="margin-top:20px">
+    <div class="alert-box">
+      <div class="alert-title">🔴 Diagnostic SEO Herbolistique — Situation critique</div>
+      Le site herbolistique.com n'est positionné sur aucun mot-clé générique stratégique du secteur. Le trafic organique estimé est &lt;1 000 sessions/mois (vs 150K+ pour Arkopharma, 80K+ pour Fleurance Nature). Absence totale de stratégie de contenu : pas de blog, pas de guides phyto, pas d'articles sur les ingrédients. Les PDP comportent une description longue (~580 caractères) avec FAQ — base intéressante mais insuffisante. L'URL PrestaShop (catégorie/id-produit.html) est correcte mais le maillage interne est inexistant.
+    </div>
+    <div class="win-box">
+      <div class="win-title">🚀 Opportunité SEO post-acquisition — Quick wins identifiés</div>
+      <strong>Kw de niche à fort potentiel :</strong> "magnésium bisglycinate praticiens", "complément alimentaire naturopathe", "phyto sans excipients". La dimension praticiens/pros est un angle SEO unique non exploité par les concurrents. La création d'un hub de contenu expert (blog, études, fiches plantes) pourrait générer +50K sessions organiques/an en 18 mois. Priorité : enrichir les 40 PDP existantes à 2000+ mots, intégrer un blog, et construire une stratégie netlinking via partenariats naturopathes.
+    </div>
+  </div>
+</div>
 
-    <div class="reco-card priority">
-      <div class="reco-card-header">
-        <div class="reco-card-icon">⭐</div>
+<!-- ===== PAID MEDIA ===== -->
+<div id="panel-paid" class="panel">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">💶</span> Audit Stack Publicitaire — herbolistique.com</div>
+
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(0,120,215,.2)">🎯</div>
         <div>
-          <div class="reco-card-title">Cible Prioritaire — Florame</div>
-          <div class="reco-card-company">🇫🇷 France · Aromathérapie/Phyto bio</div>
+          <div class="tech-name">Microsoft Advertising (Bing Ads)</div>
+          <div class="tech-desc">UET Pixel actif (ID: 187115872) · Search ads Bing/Edge</div>
         </div>
+        <div class="tech-status-ok">✅</div>
       </div>
-      <div class="reco-body">
-        <strong>Pourquoi :</strong> Marque bio premium avec forte légitimité produit et identité visuelle cohérente. Base SEO existante mais e-commerce DTC sous-développé. Canal de distribution principalement pharmacie/parapharmacie — potentiel de marge significatif en virant DTC. Positionnement "clean beauty + santé naturelle" parfait pour le moment culturel actuel.
-        <div class="reco-tags">
-          <span class="reco-tag">Brand equity ✅</span>
-          <span class="reco-tag">DTC buildable</span>
-          <span class="reco-tag">Ticket mid-market</span>
-          <span class="reco-tag">ESG native</span>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(66,103,178,.2)">📘</div>
+        <div>
+          <div class="tech-name">Meta Pixel (Facebook/Instagram Ads)</div>
+          <div class="tech-desc">NON détecté sur le site · Retargeting impossible</div>
+        </div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(234,67,53,.2)">🔴</div>
+        <div>
+          <div class="tech-name">Google Ads (Conversion Tracking)</div>
+          <div class="tech-desc">GTM présent mais aucun tag Google Ads détecté · Pas de remarketing</div>
+        </div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(0,0,0,.3)">🎵</div>
+        <div>
+          <div class="tech-name">TikTok Ads Pixel</div>
+          <div class="tech-desc">Absent · Canal en forte croissance sur cible santé naturelle</div>
+        </div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(255,165,0,.2)">📊</div>
+        <div>
+          <div class="tech-name">Microsoft Clarity</div>
+          <div class="tech-desc">Heatmaps &amp; enregistrements sessions · CRO data disponible</div>
+        </div>
+        <div class="tech-status-ok">✅</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(79,142,247,.2)">🏷</div>
+        <div>
+          <div class="tech-name">Retargeting / Audiences personnalisées</div>
+          <div class="tech-desc">Impossible sans pixel Meta/Google · Aucun retargeting cross-canal</div>
+        </div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(46,204,113,.2)">📈</div>
+        <div>
+          <div class="tech-name">Affiliation / Influence rémunérée</div>
+          <div class="tech-desc">Aucun programme d'affiliation détecté · Opportunité influence santé</div>
+        </div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+
+      <div style="margin-top:16px">
+        <div class="alert-box">
+          <div class="alert-title">🔴 Paid Media — Quasi-inexistant</div>
+          Seul Bing Ads est actif (part de marché search ~5% en France). Aucun Meta Pixel = impossible de faire du retargeting Facebook/Instagram, de créer des lookalike audiences, ou de tracker les conversions réseaux sociaux. Sans tracking Google Ads, aucune campagne Performance Max ni Shopping n'est active. Le CAC digital est inconnu et non optimisé.
         </div>
       </div>
     </div>
 
-    <div class="reco-card priority">
-      <div class="reco-card-header">
-        <div class="reco-card-icon">⭐</div>
-        <div>
-          <div class="reco-card-title">Cible Prioritaire — Lehning</div>
-          <div class="reco-card-company">🇫🇷 France · Homéo/Phyto historique</div>
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title"><span class="icon">💰</span> Maturité Paid Media — Comparatif concurrents</div>
+        <div class="chart-wrap" style="height:220px">
+          <canvas id="paidChart"></canvas>
         </div>
       </div>
-      <div class="reco-body">
-        <strong>Pourquoi :</strong> Acteur centenaire avec une notoriété spontanée forte mais une présence digitale quasi inexistante — situation classique de "sleeping beauty". Le gap digital crée un upside massif. La base prescripteurs (médecins, pharmaciens) est un actif sous-monétisé en digital. Candidat idéal à une transformation 100j.
-        <div class="reco-tags">
-          <span class="reco-tag">Notoriété forte</span>
-          <span class="reco-tag">Digital gap = upside</span>
-          <span class="reco-tag">Pricing power</span>
-          <span class="reco-tag">Retournement digital</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="reco-card">
-      <div class="reco-card-header">
-        <div class="reco-card-icon">📈</div>
-        <div>
-          <div class="reco-card-title">À surveiller — Pranarôm</div>
-          <div class="reco-card-company">🇧🇪 Belgique · Aromathérapie expert</div>
-        </div>
-      </div>
-      <div class="reco-body">
-        <strong>Pourquoi :</strong> Meilleur score e-commerce DTC du panel avec une communauté engagée. Déjà bien positionné digitalement, donc l'upside digital est plus modéré — la thèse serait davantage une accélération internationale (iHerb, Amazon EU, Allemagne, UK) que la construction du canal.
-        <div class="reco-tags">
-          <span class="reco-tag">DTC mature</span>
-          <span class="reco-tag">Internationalisation</span>
-          <span class="reco-tag">Expert positioning</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="reco-card">
-      <div class="reco-card-header">
-        <div class="reco-card-icon">🔬</div>
-        <div>
-          <div class="reco-card-title">À approfondir — Léa Nature</div>
-          <div class="reco-card-company">🇫🇷 France · Multi-marques bio</div>
-        </div>
-      </div>
-      <div class="reco-body">
-        <strong>Pourquoi :</strong> Groupe multi-marques (Jardin BiO, So'Bio étic) avec une présence digitale en progression mais une architecture de marque complexe. L'enjeu LBO serait de rationaliser le portfolio digital et de construire une master brand strategy claire pour accélérer le DTC et la fidélisation cross-marques.
-        <div class="reco-tags">
-          <span class="reco-tag">Multi-marques</span>
-          <span class="reco-tag">Fidélisation cross-brand</span>
-          <span class="reco-tag">Bio mass market</span>
-        </div>
+      <div class="card">
+        <div class="card-title"><span class="icon">📉</span> Estimation d'impact CAC — Scénarios post-optimisation</div>
+        <table class="data-table">
+          <thead><tr><th>Scénario</th><th>Levier</th><th>CAC estimé</th><th>ROAS cible</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="pill pill-red">Situation actuelle</span></td>
+              <td>Bing Ads uniquement</td>
+              <td style="color:var(--red)">Inconnu / non trackable</td>
+              <td style="color:var(--red)">Non mesuré</td>
+            </tr>
+            <tr class="focus-row">
+              <td><span class="pill pill-orange">J+90 (Quick Win)</span></td>
+              <td>Meta Pixel + Google Ads retargeting</td>
+              <td style="color:var(--gold)">€35–55</td>
+              <td style="color:var(--gold)">2.5–4x</td>
+            </tr>
+            <tr class="focus-row">
+              <td><span class="pill pill-blue">J+180 (Structuré)</span></td>
+              <td>Full funnel Meta + Google Shopping</td>
+              <td style="color:var(--accent)">€22–38</td>
+              <td style="color:var(--accent)">4–6x</td>
+            </tr>
+            <tr class="focus-row">
+              <td><span class="pill pill-green">J+365 (Maturité)</span></td>
+              <td>+ Influence + affiliation + loyalty</td>
+              <td style="color:var(--green)">€15–25</td>
+              <td style="color:var(--green)">6–10x</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-size:10px;color:var(--text-light);margin-top:8px">Benchmarks secteur compléments alimentaires France · Panier moyen Herbolistique estimé €35–45</div>
       </div>
     </div>
-
-    <div class="reco-card watch">
-      <div class="reco-card-header">
-        <div class="reco-card-icon">⚠️</div>
-        <div>
-          <div class="reco-card-title">Vigilance — Arkopharma</div>
-          <div class="reco-card-company">🇫🇷 France · Acquis par Dermapharm 2022</div>
-        </div>
-      </div>
-      <div class="reco-body">
-        <strong>Pourquoi :</strong> Leader historique en phytothérapie FR avec un digital intermédiaire, mais <strong>déjà dans un grand groupe pharma allemand</strong> (Dermapharm). La thèse de retournement pur est donc moins accessible. Intéressant uniquement si Dermapharm envisage une cession. À monitorer.
-        <div class="reco-tags">
-          <span class="reco-tag">Déjà acquis</span>
-          <span class="reco-tag">Cession possible ?</span>
-          <span class="reco-tag">B2B pharma dominant</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="reco-card avoid">
-      <div class="reco-card-header">
-        <div class="reco-card-icon">🚫</div>
-        <div>
-          <div class="reco-card-title">Hors scope LBO — Weleda / Pukka</div>
-          <div class="reco-card-company">🇨🇭 CH / 🇬🇧 UK (Unilever)</div>
-        </div>
-      </div>
-      <div class="reco-body">
-        <strong>Pourquoi :</strong> Weleda est une fondation à gouvernance complexe (anthroposophique) — quasi-inacquérable. Pukka est filiale d'Unilever depuis 2017 — valorisation groupe hors portée LBO mid-market. Ces acteurs sont utiles comme <strong>benchmarks d'excellence digitale</strong> mais pas comme cibles.
-        <div class="reco-tags">
-          <span class="reco-tag">Hors portée</span>
-          <span class="reco-tag">Benchmark référence</span>
-          <span class="reco-tag">Structure incompatible</span>
-        </div>
-      </div>
-    </div>
-
   </div>
 
   <div class="card" style="margin-top:20px">
-    <div class="card-title"><span class="icon">🗓</span> Plan d'action 100 jours — Digital Quick Wins post-acquisition</div>
+    <div class="card-title"><span class="icon">🎯</span> Stratégie Paid Media recommandée — Plan d'activation 12 mois</div>
     <div class="grid-3">
       <div>
-        <div style="font-weight:700;color:var(--accent);margin-bottom:8px;font-size:13px">J1 — J30 · Diagnostic</div>
-        <ul style="list-style:none;font-size:12px;color:var(--text-light);line-height:2">
-          <li>✓ Audit SEO technique + contenu</li>
-          <li>✓ Analyse trafic et conversion</li>
-          <li>✓ Revue du parcours client digital</li>
-          <li>✓ Cartographie des canaux et revenus</li>
-          <li>✓ Benchmark des concurrents directs</li>
-        </ul>
+        <div style="font-weight:700;color:var(--accent);margin-bottom:10px;font-size:12px">Phase 1 — J0 à J60 · Infrastructure</div>
+        <div class="funnel-step ok"><div class="funnel-name">Meta Pixel</div><div class="funnel-val">Déployer via GTM · Events : PageView, AddToCart, Purchase, ViewContent</div></div>
+        <div class="funnel-step ok"><div class="funnel-name">Google Ads Conversion</div><div class="funnel-val">Tag achat + micro-conversions (ajout panier, inscription NL)</div></div>
+        <div class="funnel-step ok"><div class="funnel-name">Catalogue produits</div><div class="funnel-val">Feed Google Merchant + Meta Catalog · Base retargeting dynamique</div></div>
       </div>
       <div>
-        <div style="font-weight:700;color:var(--gold);margin-bottom:8px;font-size:13px">J30 — J70 · Quick Wins</div>
-        <ul style="list-style:none;font-size:12px;color:var(--text-light);line-height:2">
-          <li>✓ Refonte UX site e-commerce</li>
-          <li>✓ Programme CRM + emailing automation</li>
-          <li>✓ Stratégie social media + influence</li>
-          <li>✓ Amazon / iHerb / Naturalia listing</li>
-          <li>✓ SEO contenu (guides plantes, fiches)</li>
-        </ul>
+        <div style="font-weight:700;color:var(--gold);margin-bottom:10px;font-size:12px">Phase 2 — J60 à J180 · Activation</div>
+        <div class="funnel-step warn"><div class="funnel-name">Google Shopping</div><div class="funnel-val">Performance Max sur meilleures ventes · Budget test €1K/mois</div></div>
+        <div class="funnel-step warn"><div class="funnel-name">Meta retargeting</div><div class="funnel-val">Paniers abandonnés + visiteurs PDP · Lookalike base clients</div></div>
+        <div class="funnel-step warn"><div class="funnel-name">Influence micro/nano</div><div class="funnel-val">Naturopathes / santé naturelle · Coût maîtrisé, crédibilité forte</div></div>
       </div>
       <div>
-        <div style="font-weight:700;color:var(--text-light);margin-bottom:8px;font-size:13px">J70 — J100 · Structuration</div>
-        <ul style="list-style:none;font-size:12px;color:var(--text-light);line-height:2">
-          <li>✓ Recrutement CMO digital</li>
-          <li>✓ Roadmap produit digital 18 mois</li>
-          <li>✓ Lancement programme fidélité</li>
-          <li>✓ Expansion géo en ligne (DE, IT, ES)</li>
-          <li>✓ KPIs dashboard et reporting mensuel</li>
-        </ul>
+        <div style="font-weight:700;color:var(--green);margin-bottom:10px;font-size:12px">Phase 3 — J180 à J365 · Scale</div>
+        <div class="funnel-step ko"><div class="funnel-name">TikTok Ads</div><div class="funnel-val">Format UGC / témoignages · Cible 25–45 ans santé naturelle</div></div>
+        <div class="funnel-step ko"><div class="funnel-name">Programme affiliation</div><div class="funnel-val">Partenariats blogs santé, naturopathes, nutritionnistes</div></div>
+        <div class="funnel-step ko"><div class="funnel-name">Subscription + Upsell</div><div class="funnel-val">Cures abonnement → réduction CAC via LTV accrue</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ECOM DTC ===== -->
+<div id="panel-ecom" class="panel">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">🛒</span> Stack E-commerce — herbolistique.com</div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(223,107,43,.2)">🛍</div>
+        <div><div class="tech-name">Plateforme : PrestaShop</div><div class="tech-desc">URL structure /categorie/id-produit.html · Modules détectés</div></div>
+        <div class="tech-status-warn">⚠</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(79,142,247,.2)">🔎</div>
+        <div><div class="tech-name">Recherche interne : JoliSearch</div><div class="tech-desc">Moteur de recherche PrestaShop · Qualité basique</div></div>
+        <div class="tech-status-warn">⚠</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(46,204,113,.2)">⭐</div>
+        <div><div class="tech-name">Avis clients : Skeepers</div><div class="tech-desc">Widget intégré (rr.skeepers.io) · Avis vérifiés actifs</div></div>
+        <div class="tech-status-ok">✅</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(155,89,182,.2)">🔥</div>
+        <div><div class="tech-name">CRO Analytics : Microsoft Clarity</div><div class="tech-desc">Heatmaps + session recordings · Données comportementales disponibles</div></div>
+        <div class="tech-status-ok">✅</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(231,76,60,.2)">🛡</div>
+        <div><div class="tech-name">Live Chat / Support</div><div class="tech-desc">Absent · Pas d'Intercom, Crisp, Zendesk</div></div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(240,165,0,.2)">🔄</div>
+        <div><div class="tech-name">Abonnement / Subscription</div><div class="tech-desc">Non implémenté · Modèle cures existant mais pas de récurrence auto</div></div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(79,142,247,.2)">📊</div>
+        <div><div class="tech-name">A/B Testing</div><div class="tech-desc">Absent · Aucun outil détecté (Optimizely, VWO, AB Tasty)</div></div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(46,204,113,.2)">🎁</div>
+        <div><div class="tech-name">Programme fidélité</div><div class="tech-desc">Non détecté · Pas de points, tier, cashback</div></div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title"><span class="icon">📦</span> Audit PDP — MagOptimum (best seller)</div>
+        <div class="score-row"><div class="score-label">Titre / H1</div><div class="score-bar-wrap"><div class="score-bar" style="width:70%;background:var(--gold)"></div></div><div class="score-val" style="color:var(--gold)">7</div></div>
+        <div class="score-row"><div class="score-label">Description courte</div><div class="score-bar-wrap"><div class="score-bar" style="width:10%;background:var(--red)"></div></div><div class="score-val" style="color:var(--red)">1</div></div>
+        <div class="score-row"><div class="score-label">Description longue</div><div class="score-bar-wrap"><div class="score-bar" style="width:30%;background:var(--orange)"></div></div><div class="score-val" style="color:var(--orange)">3</div></div>
+        <div class="score-row"><div class="score-label">Images produit</div><div class="score-bar-wrap"><div class="score-bar" style="width:40%;background:var(--orange)"></div></div><div class="score-val" style="color:var(--orange)">4</div></div>
+        <div class="score-row"><div class="score-label">Vidéo / UGC</div><div class="score-bar-wrap"><div class="score-bar" style="width:5%;background:var(--red)"></div></div><div class="score-val" style="color:var(--red)">0</div></div>
+        <div class="score-row"><div class="score-label">Avis Skeepers</div><div class="score-bar-wrap"><div class="score-bar" style="width:70%;background:var(--gold)"></div></div><div class="score-val" style="color:var(--gold)">7</div></div>
+        <div class="score-row"><div class="score-label">FAQ / SEO content</div><div class="score-bar-wrap"><div class="score-bar" style="width:60%;background:var(--gold)"></div></div><div class="score-val" style="color:var(--gold)">6</div></div>
+        <div class="score-row"><div class="score-label">Cross-sell / Upsell</div><div class="score-bar-wrap"><div class="score-bar" style="width:40%;background:var(--orange)"></div></div><div class="score-val" style="color:var(--orange)">4</div></div>
+        <div class="score-row"><div class="score-label">Option abonnement</div><div class="score-bar-wrap"><div class="score-bar" style="width:5%;background:var(--red)"></div></div><div class="score-val" style="color:var(--red)">0</div></div>
+        <div class="score-row"><div class="score-label">Composition / Labels</div><div class="score-bar-wrap"><div class="score-bar" style="width:60%;background:var(--gold)"></div></div><div class="score-val" style="color:var(--gold)">6</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🔄</span> Analyse funnel de conversion estimé</div>
+        <div class="funnel-step warn"><div class="funnel-name">Visite site</div><div class="funnel-val">~800–1200 sessions/mois · Source : direct + Bing + praticiens</div></div>
+        <div class="funnel-step warn"><div class="funnel-name">Vue PDP</div><div class="funnel-val">Taux de vue PDP estimé ~45% · Navigation catalogue basique</div></div>
+        <div class="funnel-step ko"><div class="funnel-name">Ajout panier</div><div class="funnel-val">Estimé ~8-12% · Pas de badge urgence, pas de subscription, no social proof fort</div></div>
+        <div class="funnel-step ko"><div class="funnel-name">Checkout</div><div class="funnel-val">Abandon estimé ~75% · Pas de relance abandon panier automatisée</div></div>
+        <div class="funnel-step ok"><div class="funnel-name">Achat finalisé</div><div class="funnel-val">Conv. rate estimé ~1.5–2% · Sous la moyenne secteur (2.5–3.5%)</div></div>
       </div>
     </div>
   </div>
 
+  <div class="card" style="margin-top:20px">
+    <div class="card-title"><span class="icon">🏆</span> Benchmark PDP &amp; Plateforme — Concurrents DTC</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Critère</th>
+          <th style="color:var(--herbo)">Herbolistique</th>
+          <th>Arkopharma</th>
+          <th>Fleurance Nature</th>
+          <th>Aroma-Zone</th>
+          <th>Naturactive</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Plateforme</td><td>PrestaShop</td><td>Hybride custom</td><td>Hybride VPC/Web</td><td>Shopify custom</td><td>Hybride Pharma</td></tr>
+        <tr class="focus-row"><td>Abonnement cures</td><td><span class="pill pill-red">❌ Absent</span></td><td><span class="pill pill-red">❌ Absent</span></td><td><span class="pill pill-green">✅ Actif</span></td><td><span class="pill pill-green">✅ Actif</span></td><td><span class="pill pill-red">❌ Absent</span></td></tr>
+        <tr class="focus-row"><td>Programme fidélité</td><td><span class="pill pill-red">❌ Absent</span></td><td><span class="pill pill-orange">⚠ Basique</span></td><td><span class="pill pill-green">✅ Mature</span></td><td><span class="pill pill-green">✅ Points</span></td><td><span class="pill pill-red">❌ Absent</span></td></tr>
+        <tr class="focus-row"><td>Live chat</td><td><span class="pill pill-red">❌</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-orange">⚠</span></td></tr>
+        <tr class="focus-row"><td>A/B Testing actif</td><td><span class="pill pill-red">❌</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-orange">⚠</span></td></tr>
+        <tr class="focus-row"><td>Vidéo sur PDP</td><td><span class="pill pill-red">❌</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-orange">⚠</span></td></tr>
+        <tr class="focus-row"><td>Relance abandon panier</td><td><span class="pill pill-red">❌</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-green">✅</span></td><td><span class="pill pill-orange">⚠</span></td></tr>
+        <tr><td>Taux conv. estimé</td><td style="color:var(--red)">~1.5–2%</td><td style="color:var(--gold)">~2.5%</td><td style="color:var(--green)">~3.5%</td><td style="color:var(--green)">~4%+</td><td style="color:var(--gold)">~2%</td></tr>
+        <tr><td>Panier moyen estimé</td><td style="color:var(--gold)">€35–45</td><td style="color:var(--gold)">€30–40</td><td style="color:var(--green)">€50–65</td><td style="color:var(--green)">€45–60</td><td style="color:var(--gold)">€25–35</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== CRM ===== -->
+<div id="panel-crm" class="panel">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">📧</span> Stack CRM &amp; Email — herbolistique.com</div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(255,90,60,.2)">📨</div>
+        <div><div class="tech-name">ESP : Sarbacane (module PrestaShop)</div><div class="tech-desc">Solution française · Automation basique · Connector PrestaShop natif</div></div>
+        <div class="tech-status-warn">⚠</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(79,142,247,.2)">⚙</div>
+        <div><div class="tech-name">Automation flows actifs</div><div class="tech-desc">Welcome series probable · Abandon panier : non confirmé · Post-achat : inconnu</div></div>
+        <div class="tech-status-warn">⚠</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(46,204,113,.2)">👥</div>
+        <div><div class="tech-name">Taille base estimée</div><div class="tech-desc">~8 000–15 000 contacts (B2B + DTC) · Source : CA + ancienneté</div></div>
+        <div class="tech-status-warn">⚠</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(240,165,0,.2)">📊</div>
+        <div><div class="tech-name">Segmentation</div><div class="tech-desc">Possible via Sarbacane · Probablement basique (B2B vs B2C)</div></div>
+        <div class="tech-status-warn">⚠</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(231,76,60,.2)">🔄</div>
+        <div><div class="tech-name">Klaviyo / Brevo avancé</div><div class="tech-desc">Non utilisé · Sarbacane = outil moins avancé pour l'e-commerce DTC</div></div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(155,89,182,.2)">📱</div>
+        <div><div class="tech-name">SMS Marketing</div><div class="tech-desc">Non détecté · Potentiel fort sur cures &amp; rappels de renouvellement</div></div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon" style="background:rgba(27,188,156,.2)">🏆</div>
+        <div><div class="tech-name">Programme VIP / Fidélité</div><div class="tech-desc">Absent · Pas de points, de tiers, de cashback</div></div>
+        <div class="tech-status-ko">❌</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title"><span class="icon">🔄</span> Benchmark maturité CRM</div>
+        <div class="chart-wrap" style="height:200px">
+          <canvas id="crmChart"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="icon">📬</span> Fréquence &amp; pratiques email — Concurrents</div>
+        <table class="data-table">
+          <thead><tr><th>Acteur</th><th>Fréq. NL</th><th>Automation</th><th>SMS</th><th>Segmentation</th></tr></thead>
+          <tbody>
+            <tr class="focus-row"><td><strong style="color:var(--herbo)">Herbolistique</strong></td><td style="color:var(--orange)">~2/mois</td><td style="color:var(--orange)">Basique</td><td style="color:var(--red)">Non</td><td style="color:var(--orange)">B2B/B2C</td></tr>
+            <tr><td>Arkopharma</td><td style="color:var(--green)">4–6/mois</td><td style="color:var(--green)">Avancée</td><td style="color:var(--green)">Oui</td><td style="color:var(--green)">Multi-critères</td></tr>
+            <tr><td>Fleurance Nature</td><td style="color:var(--green)">6–8/mois</td><td style="color:var(--green)">Très avancée</td><td style="color:var(--green)">Oui</td><td style="color:var(--green)">RFM + comportemental</td></tr>
+            <tr><td>Aroma-Zone</td><td style="color:var(--green)">4–5/mois</td><td style="color:var(--green)">Klaviyo avancé</td><td style="color:var(--green)">Oui</td><td style="color:var(--green)">3M+ contacts segmentés</td></tr>
+            <tr><td>Naturactive</td><td style="color:var(--gold)">2–3/mois</td><td style="color:var(--gold)">Modérée</td><td style="color:var(--orange)">Partiel</td><td style="color:var(--gold)">Indications santé</td></tr>
+            <tr><td>Lehning</td><td style="color:var(--orange)">1–2/mois</td><td style="color:var(--orange)">Basique</td><td style="color:var(--red)">Non</td><td style="color:var(--orange)">Limitée</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title"><span class="icon">🚀</span> Roadmap CRM recommandée — 18 mois</div>
+    <div class="grid-3">
+      <div>
+        <div style="font-weight:700;color:var(--accent);margin-bottom:10px;font-size:12px">Q1–Q2 · Infrastructure CRM</div>
+        <div class="insight">
+          <div class="insight-title">Migration vers Klaviyo ou Brevo</div>
+          Sarbacane est fonctionnel mais limité pour le DTC e-commerce avancé. Klaviyo (natif Shopify/PrestaShop) permet des flows comportementaux, predictive analytics LTV, et une segmentation RFM automatisée. ROI typique : +15-25% CA email en 6 mois post-migration.
+        </div>
+        <div class="insight">
+          <div class="insight-title">Flows prioritaires à créer</div>
+          Welcome series (5 emails sur 10 jours) · Abandon panier (3 emails à H+1, J+3, J+7) · Post-achat (remerciement + éducation produit + cross-sell) · Renouvellement cure (rappel J+30/J+60/J+90)
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:700;color:var(--gold);margin-bottom:10px;font-size:12px">Q3–Q4 · Activation &amp; Segmentation</div>
+        <div class="insight">
+          <div class="insight-title">Segmentation B2B / DTC distincte</div>
+          La cohabitation praticiens + consommateurs finaux dans la même base est un frein majeur. Créer des parcours email 100% dédiés : praticiens (actualités pro, études cliniques, tarifs grossiste) vs DTC (conseils santé, promo, cures personnalisées).
+        </div>
+        <div class="insight">
+          <div class="insight-title">SMS — Rappels renouvellement cures</div>
+          Canal à ROI immédiat sur le modèle cures (20-90 jours). SMS à J-7 fin de cure → taux de réachat +30-40% vs email seul. Budget : €150-300/mois.
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:700;color:var(--green);margin-bottom:10px;font-size:12px">Y2 · Fidélisation &amp; LTV</div>
+        <div class="insight">
+          <div class="insight-title">Programme fidélité "Cercle Herbolistique"</div>
+          Points sur achats + statuts (Découverte, Adepte, Expert) + accès aux contenus pro (webinaires, protocoles praticiens). Objectif : augmenter la fréquence d'achat de 1.8x/an à 3x/an.
+        </div>
+        <div class="insight">
+          <div class="insight-title">Abonnement cures — Modèle récurrent</div>
+          Modèle "subscribe &amp; save" (-10% sur cures récurrentes). Benchmark : Fleurance Nature génère 40%+ de CA via abonnés. Réduit le CAC et lisse le CA annuel — argument fort pour la thèse LBO.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SOCIAL ===== -->
+<div id="panel-social" class="panel">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">📱</span> Présence Réseaux Sociaux — Herbolistique vs. Concurrents</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Acteur</th>
+            <th>Instagram</th>
+            <th>Facebook</th>
+            <th>TikTok</th>
+            <th>YouTube</th>
+            <th>LinkedIn</th>
+            <th>Paid Social</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="focus-row">
+            <td><strong style="color:var(--herbo)">Herbolistique</strong></td>
+            <td><span style="color:var(--red)">~5K</span></td>
+            <td><span style="color:var(--orange)">Présent</span></td>
+            <td><span style="color:var(--red)">Absent</span></td>
+            <td><span style="color:var(--red)">Absent</span></td>
+            <td><span style="color:var(--orange)">1.2K</span></td>
+            <td><span class="pill pill-red">❌ Aucun</span></td>
+          </tr>
+          <tr>
+            <td>Arkopharma</td>
+            <td><span style="color:var(--green)">33K+</span></td>
+            <td><span style="color:var(--green)">Fort</span></td>
+            <td><span style="color:var(--gold)">Début</span></td>
+            <td><span style="color:var(--green)">Actif</span></td>
+            <td><span style="color:var(--green)">15K+</span></td>
+            <td><span class="pill pill-green">✅ Meta+Google</span></td>
+          </tr>
+          <tr>
+            <td>Fleurance Nature</td>
+            <td><span style="color:var(--green)">44K</span></td>
+            <td><span style="color:var(--green)">Fort</span></td>
+            <td><span style="color:var(--orange)">Marginal</span></td>
+            <td><span style="color:var(--green)">Actif</span></td>
+            <td><span style="color:var(--gold)">8K</span></td>
+            <td><span class="pill pill-green">✅ Multi-canal</span></td>
+          </tr>
+          <tr>
+            <td>Aroma-Zone</td>
+            <td><span style="color:var(--green)">300K+</span></td>
+            <td><span style="color:var(--green)">300K+</span></td>
+            <td><span style="color:var(--green)">80K+</span></td>
+            <td><span style="color:var(--green)">100K+</span></td>
+            <td><span style="color:var(--gold)">12K</span></td>
+            <td><span class="pill pill-green">✅ Brand+Perf</span></td>
+          </tr>
+          <tr>
+            <td>Naturactive</td>
+            <td><span style="color:var(--gold)">15K</span></td>
+            <td><span style="color:var(--gold)">Modéré</span></td>
+            <td><span style="color:var(--red)">Absent</span></td>
+            <td><span style="color:var(--orange)">Faible</span></td>
+            <td><span style="color:var(--gold)">5K</span></td>
+            <td><span class="pill pill-orange">⚠ Limité</span></td>
+          </tr>
+          <tr>
+            <td>Lehning</td>
+            <td><span style="color:var(--orange)">8K</span></td>
+            <td><span style="color:var(--orange)">Faible</span></td>
+            <td><span style="color:var(--red)">Absent</span></td>
+            <td><span style="color:var(--red)">Absent</span></td>
+            <td><span style="color:var(--orange)">2K</span></td>
+            <td><span class="pill pill-red">❌ Aucun</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📊</span> Followers Instagram — Comparatif</div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="socialChart"></canvas>
+      </div>
+      <div style="margin-top:16px">
+        <div class="alert-box">
+          <div class="alert-title">⚠ Herbolistique — Communauté quasi-inexistante</div>
+          ~5 000 abonnés Instagram, 171 posts — soit 6x moins que Lehning (concurrent comparable en taille), 9x moins qu'Arkopharma. Fréquence de publication estimée à 2–3 posts/semaine. Contenu majoritairement produit, peu engageant, sans stratégie éditoriale identifiée. Aucun contenu TikTok alors que le format short-form est devenu le canal d'acquisition dominant sur la cible 25–45 ans santé naturelle (engagement 3–5x supérieur à l'image statique).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:20px">
+    <div class="card">
+      <div class="card-title"><span class="icon">✍️</span> Stratégie de Contenu — Audit herbolistique.com</div>
+      <div class="score-row"><div class="score-label">Blog / Articles</div><div class="score-bar-wrap"><div class="score-bar" style="width:5%;background:var(--red)"></div></div><div class="score-val" style="color:var(--red)">0</div></div>
+      <div class="score-row"><div class="score-label">Fiches plantes/ingrédients</div><div class="score-bar-wrap"><div class="score-bar" style="width:10%;background:var(--red)"></div></div><div class="score-val" style="color:var(--red)">1</div></div>
+      <div class="score-row"><div class="score-label">Études cliniques/scientifiques</div><div class="score-bar-wrap"><div class="score-bar" style="width:20%;background:var(--red)"></div></div><div class="score-val" style="color:var(--red)">2</div></div>
+      <div class="score-row"><div class="score-label">Contenu praticiens</div><div class="score-bar-wrap"><div class="score-bar" style="width:35%;background:var(--orange)"></div></div><div class="score-val" style="color:var(--orange)">3.5</div></div>
+      <div class="score-row"><div class="score-label">Guides / Protocoles</div><div class="score-bar-wrap"><div class="score-bar" style="width:5%;background:var(--red)"></div></div><div class="score-val" style="color:var(--red)">0</div></div>
+      <div class="score-row"><div class="score-label">Contenu social organique</div><div class="score-bar-wrap"><div class="score-bar" style="width:20%;background:var(--red)"></div></div><div class="score-val" style="color:var(--red)">2</div></div>
+      <div class="score-row"><div class="score-label">Vidéo / Tutoriels</div><div class="score-bar-wrap"><div class="score-bar" style="width:5%;background:var(--red)"></div></div><div class="score-val" style="color:var(--red)">0</div></div>
+      <div class="score-row"><div class="score-label">Témoignages / UGC</div><div class="score-bar-wrap"><div class="score-bar" style="width:30%;background:var(--orange)"></div></div><div class="score-val" style="color:var(--orange)">3</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🌟</span> Stratégie de contenu recommandée — Angle différenciant</div>
+      <div class="win-box">
+        <div class="win-title">💡 Positionnement unique disponible : "L'expertise des praticiens, accessible à tous"</div>
+        Herbolistique possède un actif unique : la légitimité scientifique des praticiens de santé naturelle. Aucun concurrent DTC ne l'exploite aussi directement. La stratégie de contenu doit capitaliser sur cet angle : webinaires experts, protocoles naturopathes, études cliniques, témoignages praticiens. C'est la clé de différenciation face à Aroma-Zone (DIY/communauté) et Fleurance Nature (tradition/nature).
+      </div>
+      <div class="insight">
+        <div class="insight-title">📅 Plan éditorial — Priorités</div>
+        <strong>Instagram :</strong> 5 posts/semaine · Mix : conseils santé (40%), produit (30%), praticien (20%), lifestyle (10%)<br>
+        <strong>TikTok :</strong> 3 vidéos/semaine · Format : "Le praticien répond à vos questions", "Ingrédient du mois", "Cure de la semaine"<br>
+        <strong>YouTube :</strong> 2 vidéos/mois · Protocoles naturopathes, études d'ingrédients (30min)<br>
+        <strong>Blog :</strong> 8 articles/mois · 1 guide complet (2000+ mots) + 3 articles mid-tail + 4 fiches produit enrichies<br>
+        <strong>LinkedIn :</strong> 3 posts/semaine · Cible B2B praticiens · Études, innovations, partenariats
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RECOMMANDATIONS ===== -->
+<div id="panel-reco" class="panel">
+
+  <div style="background:linear-gradient(135deg,rgba(39,174,96,.12),rgba(79,142,247,.06));border:1px solid rgba(39,174,96,.3);border-radius:12px;padding:20px;margin-bottom:24px">
+    <div style="font-size:16px;font-weight:800;color:var(--herbo);margin-bottom:8px">🎯 Thèse de création de valeur digitale — Herbolistique</div>
+    <div style="font-size:13px;color:var(--text-light);line-height:1.7">
+      Herbolistique détient une marque reconnue dans l'écosystème naturopathe français, un catalogue produit qualitatif (350+ SKUs, 140 bio), et un CA en croissance organique (~€14M 2024). Son déficit digital structurel — invisible sur les mots-clés génériques, sans présence social payante, sans funnel DTC optimisé — représente un levier LBO de premier ordre. L'activation d'un plan digital en 3 phases sur 24 mois pourrait générer <strong style="color:var(--herbo)">+€4–7M de CA DTC additionnel</strong> et une amélioration de l'EBITDA de <strong style="color:var(--herbo)">2–4 points</strong> via l'amélioration du mix canal et la réduction du CAC.
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <div class="section-title">Plan d'action 100 jours — Quick Wins</div>
+
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-title"><span class="icon">🔥</span> Priorité 1 — Infrastructure tracking (J0–J30)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--text-light)">
+          <div>📍 <strong style="color:var(--text)">Meta Pixel + Conversions API</strong> via GTM existant — Débloquer tout le retargeting Meta</div>
+          <div>📍 <strong style="color:var(--text)">Google Ads tag</strong> — Activer Pmax sur les 10 best-sellers (budget €500/mois test)</div>
+          <div>📍 <strong style="color:var(--text)">GA4 migration</strong> — Universal Analytics est obsolète (couper juillet 2023)</div>
+          <div>📍 <strong style="color:var(--text)">Abandon panier automatisé</strong> — Configurer les flows Sarbacane existants (H+1, J+3)</div>
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:var(--green)">⏱ Impact estimé : +€15-25K CA/mois en 60 jours · Investissement : €5–10K</div>
+      </div>
+
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-title"><span class="icon">⚡</span> Priorité 2 — SEO & Contenu (J30–J90)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--text-light)">
+          <div>📍 <strong style="color:var(--text)">Enrichissement PDP</strong> — Passer de 580 à 2000+ mots sur les 20 best-sellers · Images lifestyle · Vidéo courte</div>
+          <div>📍 <strong style="color:var(--text)">Blog "La Pharmacopée"</strong> — 1 article/semaine sur les ingrédients clés (magnésium, oméga 3, vit. D) · 1500 mots minimum</div>
+          <div>📍 <strong style="color:var(--text)">FAQ structurée</strong> — Schema FAQ markup sur toutes les PDP · Visibilité Google "People Also Ask"</div>
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:var(--green)">⏱ Impact : +3 000–5 000 sessions organiques/mois en 6 mois</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">📱</span> Priorité 3 — Social Media & Influence (J60–J100)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--text-light)">
+          <div>📍 <strong style="color:var(--text)">TikTok compte pro</strong> — Format "Expert naturopathe répond" · 3 vidéos/semaine · Budget €0 en organique</div>
+          <div>📍 <strong style="color:var(--text)">Micro-influenceurs santé naturelle</strong> — 5–10 naturopathes (10–50K followers) · Budget €2–5K/mois · ROI 3–5x</div>
+          <div>📍 <strong style="color:var(--text)">Instagram Reels</strong> — Repurpose du contenu TikTok · Fréquence 5x/semaine</div>
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:var(--green)">⏱ Impact : +2 000 followers/mois · Premières ventes social en 90 jours</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Plan 6–24 mois — Transformation digitale</div>
+
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-title"><span class="icon">🛒</span> Refonte E-commerce (M3–M12)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--text-light)">
+          <div>📍 <strong style="color:var(--text)">Migration Shopify</strong> — PrestaShop → Shopify Plus · Meilleur écosystème apps, subscription native, Klaviyo</div>
+          <div>📍 <strong style="color:var(--text)">Abonnement cures</strong> — "Cure Express / Cure Complète" en 1/2/3 mois · Save 10–15% · Réduction CAC par LTV</div>
+          <div>📍 <strong style="color:var(--text)">Quizz personnalisation</strong> — "Quel programme pour moi ?" → parcours guidé → panier automatique · Conv. x1.8</div>
+          <div>📍 <strong style="color:var(--text)">Live chat (Crisp/Gorgias)</strong> — Support + conseil → Taux conv. +0.5 pts</div>
+          <div>📍 <strong style="color:var(--text)">A/B Testing (AB Tasty)</strong> — Optimisation continue des PDP et du checkout</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-title"><span class="icon">📧</span> CRM Avancé (M6–M18)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--text-light)">
+          <div>📍 <strong style="color:var(--text)">Migration Klaviyo</strong> — Flows comportementaux, prédictif LTV, segmentation RFM</div>
+          <div>📍 <strong style="color:var(--text)">Programme "Cercle Herbolistique"</strong> — Fidélité points + statuts + contenus exclusifs praticiens</div>
+          <div>📍 <strong style="color:var(--text)">SMS (Klaviyo SMS ou Sarbacane SMS)</strong> — Rappels renouvellement J-7 fin de cure</div>
+          <div>📍 <strong style="color:var(--text)">Segmentation B2B/DTC étanche</strong> — Parcours totalement distincts</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">💰</span> Projection d'impact — Scénario LBO</div>
+        <table class="data-table">
+          <thead><tr><th>Horizon</th><th>CA DTC additionnel</th><th>Part DTC</th><th>CAC moyen</th></tr></thead>
+          <tbody>
+            <tr><td>Situation actuelle</td><td style="color:var(--text-light)">Base (€14M total)</td><td style="color:var(--red)">&lt;20%</td><td style="color:var(--red)">Non mesuré</td></tr>
+            <tr class="focus-row"><td>M+12</td><td style="color:var(--gold)">+€1.5–3M</td><td style="color:var(--gold)">30–35%</td><td style="color:var(--gold)">€30–45</td></tr>
+            <tr class="focus-row"><td>M+24</td><td style="color:var(--green)">+€4–7M</td><td style="color:var(--green)">45–55%</td><td style="color:var(--green)">€20–30</td></tr>
+            <tr class="focus-row"><td>M+36 (exit)</td><td style="color:var(--accent)">+€8–12M</td><td style="color:var(--accent)">55–65%</td><td style="color:var(--accent)">€15–22</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:10px;color:var(--text-light);margin-top:8px">Hypothèses : Conv. rate 2.5→3.5%, AOV €38, investissement digital €150–300K/an · Mix canal amélioré + abonnement</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <div class="card-title"><span class="icon">🏁</span> Matrice de priorisation — Impact vs. Complexité</div>
+    <div class="chart-wrap" style="height:280px">
+      <canvas id="matrixChart"></canvas>
+    </div>
+  </div>
 </div>
 
 </div><!-- /main -->
 
 <div class="footer">
   Trocadéro Finance · Dashboard confidentiel · Julien Chiavassa, Consultant Stratégie Digitale · Mars 2026<br>
-  Sources : SimilarWeb estimations, SemRush public data, analyse terrain sites &amp; réseaux sociaux · Marché : MetaTech Insights, Market Data Forecast 2025
+  Sources : Analyse terrain herbolistique.com, Semrush estimations, Synadiet Observatoire 2024, SimilarWeb, Pitchbook, NCI, Journal des Entreprises · Données estimées à visée stratégique
 </div>
 
 <script>
-// ============================
-// DATA
-// ============================
-const players = [
-  {
-    name: "Pukka Herbs", country: "UK", flag: "🇬🇧",
-    scores: { site: 9, seo: 8.5, ecom: 9, social: 8.5, content: 9 },
-    global: 8.8, grade: "leader", gradeLabel: "Leader Digital",
-    revenue: "~€80M", upside: "low", brand: "high",
-    lboThesis: "Référence benchmark, filiale Unilever",
-    available: false, notes: "Hors portée — cession Unilever improbable"
-  },
-  {
-    name: "Weleda", country: "CH", flag: "🇨🇭",
-    scores: { site: 8.5, seo: 8, ecom: 7.5, social: 8, content: 8.5 },
-    global: 8.1, grade: "leader", gradeLabel: "Leader Digital",
-    revenue: "~€500M", upside: "low", brand: "high",
-    lboThesis: "Fondation anthroposophique, quasi-inacquérable",
-    available: false, notes: "Structure fondation incompatible LBO"
-  },
-  {
-    name: "Pranarôm", country: "BE", flag: "🇧🇪",
-    scores: { site: 7, seo: 6.5, ecom: 8, social: 6.5, content: 7 },
-    global: 7.0, grade: "challenger", gradeLabel: "Challenger",
-    revenue: "~€50M", upside: "mid", brand: "mid",
-    lboThesis: "DTC mature, thèse d'internationalisation",
-    available: true, notes: "Bon point d'entrée, digital déjà construit"
-  },
-  {
-    name: "Florame", country: "FR", flag: "🇫🇷",
-    scores: { site: 7, seo: 6, ecom: 5.5, social: 7, content: 6 },
-    global: 6.3, grade: "challenger", gradeLabel: "Challenger",
-    revenue: "~€30M", upside: "high", brand: "mid",
-    lboThesis: "Brand premium bio, DTC à construire",
-    available: true, notes: "⭐ Cible prioritaire — upside digital fort"
-  },
-  {
-    name: "A. Vogel", country: "CH", flag: "🇨🇭",
-    scores: { site: 7.5, seo: 7, ecom: 5.5, social: 6, content: 8 },
-    global: 6.8, grade: "challenger", gradeLabel: "Challenger",
-    revenue: "~€300M", upside: "mid", brand: "high",
-    lboThesis: "Excellent content, DTC à accélérer",
-    available: false, notes: "Groupe familial, peu probable à court terme"
-  },
-  {
-    name: "Léa Nature", country: "FR", flag: "🇫🇷",
-    scores: { site: 6, seo: 5.5, ecom: 5, social: 6, content: 5.5 },
-    global: 5.6, grade: "intermediate", gradeLabel: "Intermédiaire",
-    revenue: "~€150M", upside: "high", brand: "mid",
-    lboThesis: "Multi-marques, fidélisation cross-brand",
-    available: true, notes: "Architecture de marque complexe"
-  },
-  {
-    name: "Arkopharma", country: "FR", flag: "🇫🇷",
-    scores: { site: 5.5, seo: 6, ecom: 4, social: 4.5, content: 5 },
-    global: 5.0, grade: "intermediate", gradeLabel: "Intermédiaire",
-    revenue: "~€250M", upside: "mid", brand: "high",
-    lboThesis: "Acquis Dermapharm 2022 — watch list",
-    available: false, notes: "Déjà dans groupe pharma, cession à surveiller"
-  },
-  {
-    name: "Lehning", country: "FR", flag: "🇫🇷",
-    scores: { site: 3.5, seo: 3, ecom: 2, social: 3, content: 3.5 },
-    global: 3.0, grade: "laggard", gradeLabel: "Retardataire",
-    revenue: "~€40M", upside: "high", brand: "high",
-    lboThesis: "Sleeping beauty — gap digital = upside massif",
-    available: true, notes: "⭐ Cible prioritaire — transformation 100j"
-  },
-  {
-    name: "Naturactive", country: "FR", flag: "🇫🇷",
-    scores: { site: 4, seo: 4.5, ecom: 2.5, social: 3.5, content: 4 },
-    global: 3.7, grade: "laggard", gradeLabel: "Retardataire",
-    revenue: "~€60M", upside: "mid", brand: "mid",
-    lboThesis: "Filiale Pierre Fabre, autonomie limitée",
-    available: false, notes: "Cession possible mais improbable à court terme"
-  },
-  {
-    name: "Bionorica", country: "DE", flag: "🇩🇪",
-    scores: { site: 4, seo: 4, ecom: 2, social: 3, content: 4.5 },
-    global: 3.5, grade: "digital-desert", gradeLabel: "Digital désert",
-    revenue: "~€400M", upside: "high", brand: "high",
-    lboThesis: "Leader clinique, quasi-absent digitalement",
-    available: false, notes: "Groupe familial, accès difficile"
+// Tab navigation
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  setTimeout(initCharts, 100);
+}
+
+let chartsInit = false;
+function initCharts() {
+  if (chartsInit) return;
+  chartsInit = true;
+
+  const COLORS = {
+    herbo: 'rgba(39,174,96,0.85)',
+    arko: 'rgba(79,142,247,0.85)',
+    fleurance: 'rgba(240,165,0,0.85)',
+    naturactive: 'rgba(155,89,182,0.85)',
+    lehning: 'rgba(231,76,60,0.85)',
+    aroma: 'rgba(27,188,156,0.85)',
+  };
+
+  const gridColor = 'rgba(255,255,255,0.08)';
+  const textColor = '#9199b0';
+  Chart.defaults.color = textColor;
+
+  // RADAR CHART
+  const radarCtx = document.getElementById('radarChart');
+  if (radarCtx) {
+    new Chart(radarCtx, {
+      type: 'radar',
+      data: {
+        labels: ['SEO', 'Paid Media', 'E-com DTC', 'CRM', 'Social Media', 'Contenu'],
+        datasets: [
+          { label: 'Herbolistique', data: [2,2.5,3.5,3,2,4], borderColor: COLORS.herbo, backgroundColor: 'rgba(39,174,96,.15)', pointBackgroundColor: COLORS.herbo, borderWidth: 2.5, pointRadius: 4 },
+          { label: 'Fleurance Nature', data: [7.5,6,8,9,7,6.5], borderColor: COLORS.fleurance, backgroundColor: 'rgba(240,165,0,.08)', pointBackgroundColor: COLORS.fleurance, borderWidth: 1.5, pointRadius: 3 },
+          { label: 'Arkopharma', data: [8,8,6,6.5,7,7.5], borderColor: COLORS.arko, backgroundColor: 'rgba(79,142,247,.06)', pointBackgroundColor: COLORS.arko, borderWidth: 1.5, pointRadius: 3 },
+          { label: 'Aroma-Zone', data: [9,6.5,9.5,8.5,9.5,9.5], borderColor: COLORS.aroma, backgroundColor: 'rgba(27,188,156,.06)', pointBackgroundColor: COLORS.aroma, borderWidth: 1.5, pointRadius: 3 },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: textColor, font: { size: 11 }, boxWidth: 12 } } },
+        scales: {
+          r: {
+            min: 0, max: 10,
+            grid: { color: gridColor },
+            angleLines: { color: gridColor },
+            pointLabels: { color: textColor, font: { size: 11 } },
+            ticks: { color: textColor, backdropColor: 'transparent', stepSize: 2, font: { size: 9 } }
+          }
+        }
+      }
+    });
   }
-];
 
-// Sort by global desc initially
-players.sort((a, b) => b.global - a.global);
-
-function getScoreClass(s) {
-  if (s >= 8) return 'high';
-  if (s >= 6) return 'mid';
-  if (s >= 4) return 'fill-orange';
-  return 'low';
-}
-function getScoreTextClass(s) {
-  if (s >= 8) return 's-high';
-  if (s >= 6) return 's-mid';
-  return 's-low';
-}
-function getGSClass(s) {
-  if (s >= 8) return 'gs-a';
-  if (s >= 6) return 'gs-b';
-  if (s >= 4.5) return 'gs-c';
-  if (s >= 3) return 'gs-d';
-  return 'gs-e';
-}
-function getGradeClass(g) {
-  return 'grade-' + g;
-}
-
-function makeBar(score, max=10) {
-  const pct = (score/max)*100;
-  const cls = getScoreClass(score);
-  return `<div class="score-bar-wrap">
-    <div class="score-bar"><div class="score-bar-fill fill-${cls}" style="width:${pct}%"></div></div>
-    <span class="score-num ${getScoreTextClass(score)}">${score}</span>
-  </div>`;
-}
-
-// ============================
-// RENDER TABLE
-// ============================
-function renderTable(data) {
-  const tbody = document.getElementById('tableBody');
-  tbody.innerHTML = data.map(p => `
-    <tr data-country="${p.country}" data-grade="${p.grade}">
-      <td>
-        <span class="player-name">${p.flag} ${p.name}</span>
-        ${p.available ? '<span style="color:#27ae60;font-size:10px;margin-left:6px">●</span>' : '<span style="color:#e74c3c;font-size:10px;margin-left:6px">●</span>'}
-      </td>
-      <td><span class="player-country">${p.country}</span></td>
-      <td><div class="global-score ${getGSClass(p.global)}">${p.global}</div></td>
-      <td>${makeBar(p.scores.site)}</td>
-      <td>${makeBar(p.scores.seo)}</td>
-      <td>${makeBar(p.scores.ecom)}</td>
-      <td>${makeBar(p.scores.social)}</td>
-      <td>${makeBar(p.scores.content)}</td>
-      <td><span class="grade-pill ${getGradeClass(p.grade)}">${p.gradeLabel}</span></td>
-      <td style="font-size:12px;color:var(--text-light)">${p.revenue}</td>
-    </tr>
-  `).join('');
-}
-
-// ============================
-// FILTER TABLE
-// ============================
-function filterTable(filter, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  let filtered;
-  if (filter === 'all') filtered = players;
-  else if (filter === 'leader') filtered = players.filter(p => p.grade === 'leader' || p.grade === 'challenger');
-  else if (filter === 'laggard') filtered = players.filter(p => p.grade === 'laggard' || p.grade === 'digital-desert');
-  else filtered = players.filter(p => p.country === filter);
-  renderTable(filtered);
-}
-
-// ============================
-// SORT TABLE
-// ============================
-let sortDir = {};
-function sortTable(col) {
-  const dir = sortDir[col] === 'asc' ? 'desc' : 'asc';
-  sortDir[col] = dir;
-  const keys = ['name', 'country', 'global', null, null, null, null, null, 'grade'];
-  const key = keys[col];
-  if (!key) return;
-  players.sort((a, b) => {
-    const va = typeof a[key] === 'string' ? a[key] : a[key];
-    const vb = typeof b[key] === 'string' ? b[key] : b[key];
-    if (va < vb) return dir === 'asc' ? -1 : 1;
-    if (va > vb) return dir === 'asc' ? 1 : -1;
-    return 0;
-  });
-  renderTable(players);
-}
-
-// ============================
-// RENDER INVESTMENT TABLE
-// ============================
-function renderInvestTable() {
-  const tbody = document.getElementById('investTable');
-  const upsideClass = {'high':'signal-high', 'mid':'signal-mid', 'low':'signal-low'};
-  const upsideLabel = {'high':'Élevé ↑↑', 'mid':'Modéré ↑', 'low':'Limité'};
-  const brandClass = {'high':'grade-leader', 'mid':'grade-intermediate', 'low':'grade-laggard'};
-  tbody.innerHTML = players.map(p => `
-    <tr>
-      <td><strong>${p.flag} ${p.name}</strong></td>
-      <td><span class="signal ${upsideClass[p.upside]}">${upsideLabel[p.upside]}</span></td>
-      <td><span class="grade-pill ${brandClass[p.brand]}">${p.brand === 'high' ? '★★★' : p.brand === 'mid' ? '★★' : '★'}</span></td>
-      <td style="font-size:12px">${p.revenue}</td>
-      <td style="font-size:11px;color:var(--text-light)">${p.notes}</td>
-    </tr>
-  `).join('');
-}
-
-// ============================
-// CHARTS
-// ============================
-window.addEventListener('DOMContentLoaded', () => {
-  renderTable(players);
-  renderInvestTable();
-  drawRadars();
-  drawBubble();
-  drawCountryBar();
-  drawInvestMatrix();
-});
-
-function drawBubble() {
-  const ctx = document.getElementById('bubbleChart').getContext('2d');
-  const datasets = players.map(p => ({
-    label: p.name,
-    data: [{
-      x: p.scores.ecom,
-      y: p.scores.seo,
-      r: p.global * 3.2
-    }],
-    backgroundColor: p.available
-      ? 'rgba(61,122,86,0.65)'
-      : 'rgba(200,168,75,0.55)',
-    borderColor: p.available ? '#1e8449' : '#c8a84b',
-    borderWidth: 2
-  }));
-
-  new Chart(ctx, {
-    type: 'bubble',
-    data: { datasets },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: (ctx) => {
-              const p = players[ctx.datasetIndex];
-              return `${p.name} | SEO:${p.scores.seo} | DTC:${p.scores.ecom} | Score:${p.global}`;
-            }
-          }
-        }
+  // SEO TRAFFIC BAR
+  const seoCtx = document.getElementById('seoTrafficChart');
+  if (seoCtx) {
+    new Chart(seoCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Herbolistique', 'Lehning', 'Naturactive', 'Fleurance N.', 'Arkopharma', 'Aroma-Zone'],
+        datasets: [{
+          label: 'Trafic organique estimé (k sessions/mois)',
+          data: [1, 12, 45, 85, 160, 320],
+          backgroundColor: [COLORS.herbo, COLORS.lehning, COLORS.naturactive, COLORS.fleurance, COLORS.arko, COLORS.aroma],
+          borderRadius: 6,
+        }]
       },
-      scales: {
-        x: {
-          title: { display: true, text: 'E-commerce DTC →', font: { size: 11 } },
-          min: 0, max: 10,
-          grid: { color: '#eee' }
-        },
-        y: {
-          title: { display: true, text: '↑ SEO & Trafic', font: { size: 11 } },
-          min: 0, max: 10,
-          grid: { color: '#eee' }
+      options: {
+        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } },
+          y: { grid: { color: 'transparent' }, ticks: { color: textColor, font: { size: 11 } } }
         }
       }
-    }
-  });
+    });
+  }
 
-  // Legend
-  const legDiv = document.createElement('div');
-  legDiv.style.cssText = 'display:flex;gap:16px;margin-top:8px;font-size:11px;color:#5a6e60;justify-content:center';
-  legDiv.innerHTML = '<span><span style="color:#1e8449">●</span> Cible accessible</span><span><span style="color:#c8a84b">●</span> Hors portée / groupe</span><span>Taille bulle = score global</span>';
-  document.getElementById('bubbleChart').parentNode.appendChild(legDiv);
-}
-
-function drawCountryBar() {
-  const ctx = document.getElementById('countryBar').getContext('2d');
-  const countries = [...new Set(players.map(p => p.country))];
-  const avgByCountry = countries.map(c => {
-    const ps = players.filter(p => p.country === c);
-    return { country: c, avg: (ps.reduce((s,p) => s+p.global,0)/ps.length).toFixed(1), count: ps.length };
-  }).sort((a,b) => b.avg - a.avg);
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: avgByCountry.map(d => `${d.country} (${d.count})`),
-      datasets: [{
-        label: 'Score digital moyen',
-        data: avgByCountry.map(d => d.avg),
-        backgroundColor: ['#3d7a56','#6ab187','#c8a84b','#e67e22','#c0392b'],
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: (ctx) => `Score moyen : ${ctx.raw}/10` } }
+  // PAID MEDIA RADAR
+  const paidCtx = document.getElementById('paidChart');
+  if (paidCtx) {
+    new Chart(paidCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Herbolistique', 'Lehning', 'Naturactive', 'Fleurance N.', 'Arkopharma', 'Aroma-Zone'],
+        datasets: [{
+          label: 'Score maturité Paid Media (/10)',
+          data: [2.5, 3.5, 6, 6, 8, 6.5],
+          backgroundColor: [COLORS.herbo, COLORS.lehning, COLORS.naturactive, COLORS.fleurance, COLORS.arko, COLORS.aroma],
+          borderRadius: 6,
+        }]
       },
-      scales: {
-        y: { min: 0, max: 10, grid: { color: '#eee' } },
-        x: { grid: { display: false } }
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: 'transparent' }, ticks: { color: textColor, font: { size: 10 } } },
+          y: { grid: { color: gridColor }, min: 0, max: 10, ticks: { color: textColor, font: { size: 10 } } }
+        }
       }
-    }
-  });
-}
+    });
+  }
 
-function drawRadars() {
-  const grid = document.getElementById('radarGrid');
-  const labels = ['Site & UX', 'SEO', 'E-com DTC', 'Social', 'Content'];
-  const colors = [
-    'rgba(61,122,86,0.3)', 'rgba(200,168,75,0.3)', 'rgba(22,130,180,0.3)',
-    'rgba(192,57,43,0.3)', 'rgba(125,60,152,0.3)', 'rgba(230,126,34,0.3)',
-    'rgba(39,174,96,0.3)', 'rgba(52,73,94,0.3)', 'rgba(231,76,60,0.3)', 'rgba(26,188,156,0.3)'
-  ];
-  const borders = [
-    '#3d7a56','#c8a84b','#1682b4','#c0392b','#7d3c98','#e67e22',
-    '#27ae60','#34495e','#e74c3c','#1abc9c'
-  ];
+  // CRM CHART
+  const crmCtx = document.getElementById('crmChart');
+  if (crmCtx) {
+    new Chart(crmCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Herbolistique', 'Lehning', 'Naturactive', 'Fleurance N.', 'Arkopharma', 'Aroma-Zone'],
+        datasets: [{
+          label: 'Score CRM & Rétention (/10)',
+          data: [3, 3.5, 5.5, 9, 6.5, 8.5],
+          backgroundColor: [COLORS.herbo, COLORS.lehning, COLORS.naturactive, COLORS.fleurance, COLORS.arko, COLORS.aroma],
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: 'transparent' }, ticks: { color: textColor, font: { size: 10 } } },
+          y: { grid: { color: gridColor }, min: 0, max: 10, ticks: { color: textColor, font: { size: 10 } } }
+        }
+      }
+    });
+  }
 
-  players.forEach((p, i) => {
-    const card = document.createElement('div');
-    card.className = 'radar-card';
-    const scoreList = Object.values(p.scores);
-    const avg = (scoreList.reduce((a,b)=>a+b,0)/scoreList.length).toFixed(1);
+  // SOCIAL CHART
+  const socialCtx = document.getElementById('socialChart');
+  if (socialCtx) {
+    new Chart(socialCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Herbolistique', 'Lehning', 'Naturactive', 'Fleurance N.', 'Arkopharma', 'Aroma-Zone'],
+        datasets: [{
+          label: 'Abonnés Instagram',
+          data: [5000, 8000, 15000, 44000, 33000, 300000],
+          backgroundColor: [COLORS.herbo, COLORS.lehning, COLORS.naturactive, COLORS.fleurance, COLORS.arko, COLORS.aroma],
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: 'transparent' }, ticks: { color: textColor, font: { size: 10 } } },
+          y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 }, callback: v => v >= 1000 ? (v/1000)+'K' : v } }
+        }
+      }
+    });
+  }
 
-    card.innerHTML = `
-      <div class="radar-title">${p.flag} ${p.name}</div>
-      <div class="radar-subtitle"><span class="grade-pill ${getGradeClass(p.grade)}">${p.gradeLabel}</span> · Score: ${p.global}/10</div>
-      <canvas id="radar-${i}" height="180"></canvas>
-    `;
-    grid.appendChild(card);
-
-    setTimeout(() => {
-      const ctx = document.getElementById(`radar-${i}`).getContext('2d');
-      new Chart(ctx, {
-        type: 'radar',
-        data: {
-          labels,
-          datasets: [{
-            data: [p.scores.site, p.scores.seo, p.scores.ecom, p.scores.social, p.scores.content],
-            backgroundColor: colors[i],
-            borderColor: borders[i],
-            borderWidth: 2,
-            pointRadius: 3,
-            pointBackgroundColor: borders[i]
-          }]
+  // MATRIX CHART (Bubble)
+  const matrixCtx = document.getElementById('matrixChart');
+  if (matrixCtx) {
+    new Chart(matrixCtx, {
+      type: 'bubble',
+      data: {
+        datasets: [
+          { label: 'Meta Pixel + retargeting', data: [{x:9,y:2,r:16}], backgroundColor: 'rgba(46,204,113,0.8)' },
+          { label: 'Abandon panier flows', data: [{x:8,y:2,r:13}], backgroundColor: 'rgba(46,204,113,0.7)' },
+          { label: 'Enrichissement PDP', data: [{x:8,y:3,r:14}], backgroundColor: 'rgba(46,204,113,0.7)' },
+          { label: 'Google Shopping Pmax', data: [{x:7,y:3,r:13}], backgroundColor: 'rgba(240,165,0,0.8)' },
+          { label: 'TikTok organique', data: [{x:7,y:2,r:11}], backgroundColor: 'rgba(46,204,113,0.6)' },
+          { label: 'Blog SEO expert', data: [{x:9,y:4,r:15}], backgroundColor: 'rgba(240,165,0,0.7)' },
+          { label: 'Migration GA4', data: [{x:6,y:1,r:10}], backgroundColor: 'rgba(46,204,113,0.6)' },
+          { label: 'Micro-influence santé', data: [{x:8,y:3,r:12}], backgroundColor: 'rgba(240,165,0,0.7)' },
+          { label: 'Abonnement cures', data: [{x:10,y:6,r:18}], backgroundColor: 'rgba(79,142,247,0.8)' },
+          { label: 'Migration Shopify', data: [{x:9,y:8,r:16}], backgroundColor: 'rgba(155,89,182,0.7)' },
+          { label: 'Klaviyo migration', data: [{x:8,y:5,r:14}], backgroundColor: 'rgba(79,142,247,0.7)' },
+          { label: 'Programme fidélité', data: [{x:7,y:7,r:14}], backgroundColor: 'rgba(155,89,182,0.6)' },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: textColor, font: { size: 9 }, boxWidth: 10 } },
+          tooltip: { callbacks: { label: ctx => ctx.dataset.label } }
         },
-        options: {
-          responsive: true,
-          plugins: { legend: { display: false } },
-          scales: {
-            r: {
-              min: 0, max: 10,
-              ticks: { display: false, stepSize: 2 },
-              pointLabels: { font: { size: 10 } },
-              grid: { color: '#e0e8e0' }
-            }
+        scales: {
+          x: {
+            title: { display: true, text: '← Complexité / Durée →', color: textColor, font: { size: 10 } },
+            min: 0, max: 11,
+            grid: { color: gridColor },
+            ticks: { color: textColor, callback: v => v===2?'Facile':v===5?'Modéré':v===9?'Complexe':'' }
+          },
+          y: {
+            title: { display: true, text: '← Impact business →', color: textColor, font: { size: 10 } },
+            min: 0, max: 11,
+            grid: { color: gridColor },
+            ticks: { color: textColor, callback: v => v===2?'Quick Win':v===6?'Structurant':v===9?'Transformateur':'' }
           }
         }
-      });
-    }, 50);
-  });
-}
-
-function drawInvestMatrix() {
-  const ctx = document.getElementById('investMatrix').getContext('2d');
-  const upsideMap = { high: 8.5, mid: 5, low: 2 };
-  const brandMap = { high: 8.5, mid: 5, low: 2 };
-  const colorMap = { true: 'rgba(61,122,86,0.7)', false: 'rgba(200,168,75,0.55)' };
-  const borderMap = { true: '#1e8449', false: '#c8a84b' };
-
-  const datasets = players.map(p => ({
-    label: p.name,
-    data: [{
-      x: upsideMap[p.upside] + (Math.random()-0.5)*0.8,
-      y: brandMap[p.brand] + (Math.random()-0.5)*0.8,
-      r: 16
-    }],
-    backgroundColor: colorMap[p.available],
-    borderColor: borderMap[p.available],
-    borderWidth: 2
-  }));
-
-  new Chart(ctx, {
-    type: 'bubble',
-    data: { datasets },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: (ctx) => {
-              const p = players[ctx.datasetIndex];
-              return [`${p.flag} ${p.name}`, p.lboThesis];
-            }
-          }
-        }
-      },
-      scales: {
-        x: {
-          title: { display: true, text: '← Upside Digital →', font: { size: 11 } },
-          min: 0, max: 11,
-          grid: { color: '#eee' },
-          ticks: { callback: (v) => {
-            if (v <= 2) return 'Faible';
-            if (v <= 6) return 'Modéré';
-            if (v <= 9) return 'Élevé';
-            return '';
-          }}
-        },
-        y: {
-          title: { display: true, text: '↑ Brand Equity', font: { size: 11 } },
-          min: 0, max: 11,
-          grid: { color: '#eee' },
-          ticks: { callback: (v) => {
-            if (v <= 2) return 'Faible';
-            if (v <= 6) return 'Modérée';
-            if (v <= 9) return 'Forte';
-            return '';
-          }}
-        }
-      },
-      layout: { padding: 10 }
-    },
-    plugins: [{
-      id: 'labels',
-      afterDatasetDraw(chart, args) {
-        const { ctx } = chart;
-        const meta = args.meta;
-        if (meta.data.length === 0) return;
-        const dp = meta.data[0];
-        if (!dp) return;
-        const p = players[args.index];
-        ctx.save();
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 9px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(p.name.split(' ')[0], dp.x, dp.y);
-        ctx.restore();
       }
-    }]
-  });
+    });
+  }
 }
 
-// ============================
-// TABS
-// ============================
-function showTab(id) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  event.target.classList.add('active');
-}
+// Init charts on load
+window.addEventListener('load', initCharts);
 </script>
 </body>
 </html>
